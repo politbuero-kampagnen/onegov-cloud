@@ -412,13 +412,13 @@
 </metal:newslist>
 
 <metal:hidden_page_hint define-macro="hidden_from_public_hint" i18n:domain="onegov.org">
-    <tal:b condition="item.is_hidden_from_public|nothing">
+    <tal:b condition="item.access != 'public'|nothing">
         <i title="This site is hidden from the general public" i18n:attributes="title" class="hidden-from-public-hint"></i>
     </tal:b>
 </metal:hidden_page_hint>
 
 <metal:hidden_page_hint define-macro="hidden_from_public_hint_long" i18n:domain="onegov.org">
-    <tal:b condition="item.is_hidden_from_public|nothing">
+    <tal:b condition="item.access != 'public'|nothing">
         <div class="row">
             <div class="small-12 columns">
                 <div class="panel callout">

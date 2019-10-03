@@ -45,7 +45,7 @@ class AgencyPdfDefault(Pdf):
             pdf.table_of_contents()
             pdf.pagebreak()
         for agency in agencies:
-            if agency.is_hidden_from_public:
+            if agency.access == 'secret':
                 continue
             pdf.agency(agency, exclude,
                        content_so_far=False,
@@ -61,8 +61,8 @@ class AgencyPdfDefault(Pdf):
         data = []
         for membership in agency.memberships:
             if (
-                membership.is_hidden_from_public
-                or membership.person.is_hidden_from_public
+                membership.access == 'secret'
+                or membership.person.access == 'secret'
             ):
                 continue
 
@@ -128,7 +128,7 @@ class AgencyPdfDefault(Pdf):
             has_content = True
 
         for child in agency.children:
-            if child.is_hidden_from_public:
+            if child.access == 'secret':
                 continue
             child_has_content = self.agency(
                 child, exclude, level + 1, has_content,
