@@ -66,11 +66,11 @@ class AccessExtension(ContentExtension):
 
         class AccessForm(form_class):
             access = RadioField(
-                label=_("Accessible by"),
+                label=_("Access"),
                 choices=(
-                    ('public', _("Anyone (public)")),
+                    ('public', _("Public")),
+                    ('secret', _("Through URL only (not listed)")),
                     ('private', _("Only by privileged users")),
-                    ('secret', _("Anyone that knows the url (unlisted)"))
                 ),
                 default='public',
                 fieldset=_("Security")

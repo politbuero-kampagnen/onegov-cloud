@@ -96,15 +96,23 @@ class Link(AccessMixin):
             classes = self.classes + (extra_classes or tuple())
             a.attrib['class'] = ' '.join(classes)
 
-        # add the hidden from public hint if needed
-        if self.access != 'public':
+        # add the access hint if needed
+        if self.access == 'private':
 
-            # This snippet is duplicated in the hidden-from-public-hint macro!
+            # This snippet is duplicated in the access-hint macro!
             hint = builder.I()
-            hint.attrib['class'] = 'hidden-from-public-hint'
-            hint.attrib['title'] = request.translate(
-                _("This site is hidden from the general public")
-            )
+            hint.attrib['class'] = 'private-hint'
+            hint.attrib['title'] = request.translate(_("This site is private"))
+
+            a.append(builder.I(' '))
+            a.append(hint)
+
+        elif self.access == 'secret':
+
+            # This snippet is duplicated in the access-hint macro!
+            hint = builder.I()
+            hint.attrib['class'] = 'secret-hint'
+            hint.attrib['title'] = request.translate(_("This site is secret"))
 
             a.append(builder.I(' '))
             a.append(hint)

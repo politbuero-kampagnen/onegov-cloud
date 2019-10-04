@@ -311,7 +311,7 @@ class SliderWidget(object):
         sets = tuple(
             s.id for s in sets
             if s.meta.get('show_images_on_homepage')
-            and s.meta.get('access') == 'public'
+            and s.meta.get('access', 'public') == 'public'
         )
 
         if not sets:
