@@ -139,7 +139,7 @@ def import_agencies(group_context, file, clear, skip_root, skip_download,
                 export_fields=export_fields,
                 access=(
                     sheet.cell_value(row, 8) == 'private'
-                    and 'secret' or 'public'
+                    and 'private' or 'public'
                 ),
                 order=external_id,
             )
@@ -201,7 +201,7 @@ def import_agencies(group_context, file, clear, skip_root, skip_download,
                 website=sheet.cell_value(row, 12).strip(),
                 access=(
                     sheet.cell_value(row, 15) == 'private'
-                    and 'secret' or 'public'),
+                    and 'private' or 'public'),
                 notes=notes,
             )
             memberships = sheet.cell_value(row, 16).split('//')

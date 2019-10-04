@@ -12,11 +12,13 @@ class ExtendedAgencyMembership(AgencyMembership, AccessExtension):
 
     @property
     def es_public(self):
-        if self.agency and self.agency.access != 'public':
-            return False
+        if self.agency:
+            if self.agency.meta.get('access', 'public') != 'public':
+                return False
 
-        if self.person and self.person.access != 'public':
-            return False
+        if self.person:
+            if self.person.meta.get('access', 'public') != 'public':
+                return False
 
         return self.access == 'public'
 

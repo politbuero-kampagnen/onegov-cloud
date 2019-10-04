@@ -146,15 +146,15 @@ def test_extended_membership(session):
     assert agency.memberships.one() == membership
     assert person.memberships.one() == membership
 
-    membership.access == 'private'
+    membership.access = 'private'
     assert membership.es_public is False
 
-    membership.access == 'public'
-    membership.agency.access = 'private'
+    membership.access = 'public'
+    membership.agency.meta['access'] = 'private'
     assert membership.es_public is False
 
-    membership.agency.access = 'public'
-    membership.person.access = 'private'
+    membership.agency.meta['access'] = 'public'
+    membership.person.meta['access'] = 'private'
     assert membership.es_public is False
 
 
