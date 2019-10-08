@@ -45,6 +45,7 @@ $(function() {
                 var container = $("<div>").insertBefore(this);
 
                 $(this).hide();
+                $(this).attr('data-always-hidden', '');
 
                 initFormcodeSelect(container.get(0), watcher, this, type, include.split(','), exclude.split(','));
             });
