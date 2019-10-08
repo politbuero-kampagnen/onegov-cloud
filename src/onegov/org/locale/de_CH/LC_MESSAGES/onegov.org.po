@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
-"POT-Creation-Date: 2019-10-04 10:56+0200\n"
+"POT-Creation-Date: 2019-10-08 11:20+0200\n"
 "PO-Revision-Date: 2019-02-18 06:39+0100\n"
 "Last-Translator: Marc Sommerhalder <marc.sommerhalder@seantis.ch>\n"
 "Language-Team: German\n"
@@ -728,6 +728,21 @@ msgstr "Stunden"
 msgid "Days"
 msgstr "Tage"
 
+msgid "Limit reservations to certain zip-codes"
+msgstr "Reservationen nach Postleitzahl einschränken"
+
+msgid "Zip-code limit"
+msgstr "Postleitzahl Einschränkung"
+
+msgid "Zip-code field"
+msgstr "Postleitzahl-Feld"
+
+msgid "Allowed zip-codes (one per line)"
+msgstr "Erlaubte Postleitzahlen (eine PLZ pro Zeile)"
+
+msgid "Days before an allocation may be reserved by anyone"
+msgstr "Tage bevor Einteilungen von allen reserviert werden können"
+
 msgid "Per item"
 msgstr "Pro Eintrag"
 
@@ -739,6 +754,15 @@ msgstr "Preis pro Eintrag"
 
 msgid "Price per hour"
 msgstr "Preis pro Stunde"
+
+msgid "Please select the form field that holds the zip-code"
+msgstr "Bitte wählen Sie das Formfeld welches die Postleitzahl enthält"
+
+msgid "Please enter at least one zip-code"
+msgstr "Bitte geben Sie mindestens eine Postleitzahl ein"
+
+msgid "Please enter one zip-code per line, without spaces or commas"
+msgstr "Bitte geben Sie eine Postleitzahl pro Zeile ein, ohne Leerzeichen und Kommas"
 
 msgid "The price must be larger than zero"
 msgstr "Der Preis muss grösser als Null sein"

@@ -90,6 +90,20 @@ class Resource(ORMBase, ModelBase, ContentMixin, TimestampMixin):
     #: reservation deadline (e.g. None, (5, 'd'), (24, 'h'))
     deadline = content_property()
 
+    #: reservation zip code limit, contains None or something like this:
+    #: {
+    #:     'zipcode_field': 'PLZ',
+    #:     'zipcode_list': [1234, 5678],
+    #:     'zipcode_days': 3
+    #: }
+    #:
+    #: zipcode_field -> the field name in the definition containing zip codes
+    #: zipcode_list -> zip codes exempt from the rule
+    #: zipcode_days -> how many days before the reservation the rule is dropped
+    #:
+    #: Note, the zipcode_field name is in the human readable form.
+    zipcode_block = content_property()
+
     #: secret token to get anonymous access to calendar data
     access_token = content_property()
 
