@@ -1,6 +1,6 @@
 import secrets
 
-from datetime import timedelta
+from datetime import timedelta, date
 from libres import new_scheduler
 from libres.db.models import Allocation
 from libres.db.models.base import ORMBase
@@ -234,6 +234,20 @@ class Resource(ORMBase, ModelBase, ContentMixin, TimestampMixin):
 
         deadline = locals()[f'deadline_using_{unit}']()
         return deadline <= utcnow()
+
+    def is_zip_blocked(self, dt):
+        if not self.zipcode_block:
+            return False
+
+        return (dt - date.today()).days > self.zipcode_block['zipcode_days']
+
+    def is_allowed_zip_code(self, zipcode):
+        assert isinstance(int, zipcode)
+
+        if not self.zipcode_block:
+            return True
+
+        return zipcode in self.zipcode_block['zipcode_list']
 
     def renew_access_token(self):
         self.access_token = secrets.token_hex(16)
