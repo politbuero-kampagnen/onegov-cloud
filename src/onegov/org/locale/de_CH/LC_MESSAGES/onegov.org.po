@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
-"POT-Creation-Date: 2019-10-08 16:07+0200\n"
+"POT-Creation-Date: 2019-10-09 10:42+0200\n"
 "PO-Revision-Date: 2019-02-18 06:39+0100\n"
 "Last-Translator: Marc Sommerhalder <marc.sommerhalder@seantis.ch>\n"
 "Language-Team: German\n"
@@ -2952,6 +2952,8 @@ msgid ""
 "You can only reserve this allocation before ${date} if you live in the "
 "following zipcodes: ${zipcodes}"
 msgstr ""
+"Sie können diese Einteilung nur vor dem ${date} reservieren, wenn Sie in "
+"einem der folgenden Postleitzahlen wohnen: ${zipcodes}"
 
 #, python-format
 msgid "${percent}% Available"
