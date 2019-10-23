@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
-"POT-Creation-Date: 2019-10-22 11:36+0200\n"
+"POT-Creation-Date: 2019-10-22 16:19+0200\n"
 "PO-Revision-Date: 2019-02-18 06:40+0100\n"
 "Last-Translator: Marc Sommerhalder <marc.sommerhalder@seantis.ch>\n"
 "Language-Team: French\n"
@@ -415,11 +415,11 @@ msgstr "Profitez d'un concerto dans le jardin du château."
 msgid "Image"
 msgstr "Image"
 
+msgid "Additional Information (PDF)"
+msgstr "Informations complémentaires (PDF)"
+
 msgid "Venue"
 msgstr "Lieu"
-
-msgid "Castle garden"
-msgstr "Jardin du château"
 
 msgid "10 CHF for adults"
 msgstr "10 CHF pour les adultes"
@@ -2033,6 +2033,9 @@ msgstr "Retiré"
 
 msgid "List Preview"
 msgstr "Aperçu de la liste"
+
+msgid "Additional Information"
+msgstr "Information additionnelle"
 
 msgid "Location"
 msgstr "Localisation"
@@ -3900,6 +3903,9 @@ msgstr "L'utilisateur a bien été créé"
 
 msgid "You have been successfully unsubscribed from all regular emails."
 msgstr "Vous vous êtes bien désinscrit(e) de tous les e-mails normaux."
+
+#~ msgid "Castle garden"
+#~ msgstr "Jardin du château"
 
 #~ msgid "This site is hidden from the general public"
 #~ msgstr "Ce site est caché pour le grand public"

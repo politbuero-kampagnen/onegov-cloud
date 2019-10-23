@@ -127,8 +127,9 @@ class GuidleOffer(GuidleBase):
             )).strip(),
         ))
 
-    def image_url(self, size):
-        """ Returns the image url for the offer with the given size or None.
+    def image(self, size):
+        """ Returns the image url for the offer with the given size, together
+        with the filename, or (None, None).
 
         """
 
@@ -142,9 +143,21 @@ class GuidleOffer(GuidleBase):
         images = self.find(f"({xpath})[1]")
 
         if not len(images):
-            return None
+            return None, None
 
-        return images[0].attrib['url']
+        url = images[0].attrib['url']
+        return url, url.rsplit('/', 1)[-1]
+
+    def pdf(self):
+        """ Returns the first attachment that is a pdf, together with
+        the filename, or (None, None).
+
+        """
+
+        for attachment in self.find('guidle:attachments'):
+            import pdb; pdb.set_trace()
+
+        return None, None
 
     def tags(self, tagmap=None):
         """ Returns a set of known and a set of unkonwn tags. """
