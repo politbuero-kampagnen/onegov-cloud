@@ -264,6 +264,16 @@ def import_json(group_context, url, tagmap, clear):
                         reference=as_fileintent(buffer, filename)
                     )
 
+            if item['attachements']:
+                buffer = download_file(item['attachements'][0]['url'])
+
+                if buffer:
+                    filename = item['attachements'][0]['name'] or 'attachment'
+                    event.pdf = EventFile(
+                        name=filename,
+                        reference=as_fileintent(buffer, filename)
+                    )
+
             session.add(event)
             event.submit()
             event.publish()

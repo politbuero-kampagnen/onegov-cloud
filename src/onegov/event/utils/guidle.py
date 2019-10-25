@@ -154,8 +154,16 @@ class GuidleOffer(GuidleBase):
 
         """
 
-        for attachment in self.find('guidle:attachments'):
-            import pdb; pdb.set_trace()
+        for attachment in self.find('guidle:offerDetail//guidle:attachment'):
+            url = self.get('guidle:url', root=attachment)
+
+            if not url.endswith('.pdf'):
+                return None, None
+
+            name = self.get('guidle:description', root=attachment)
+            name = name.strip().split('\n')[0]
+
+            return url, f'{name}.pdf'
 
         return None, None
 
