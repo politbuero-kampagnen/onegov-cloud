@@ -124,4 +124,7 @@ class Boardlet(Action):
         return self.name
 
     def perform(self, func, boardlets_registry):
-        boardlets_registry[self.name] = func
+        boardlets_registry[self.name] = {
+            'cls': func,
+            'order': self.order
+        }
