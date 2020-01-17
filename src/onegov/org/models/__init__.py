@@ -1,5 +1,6 @@
 from onegov.org.models.atoz import AtoZ
 from onegov.org.models.clipboard import Clipboard
+from onegov.org.models.dashboard import Dashboard
 from onegov.org.models.directory import DirectorySubmissionAction
 from onegov.org.models.directory import ExtendedDirectory
 from onegov.org.models.directory import ExtendedDirectoryEntry
@@ -55,6 +56,7 @@ __all__ = [
     'ContentExtension',
     'CoordinatesExtension',
     'CustomFormDefinition',
+    'Dashboard',
     'DaypassResource',
     'DirectoryMessage',
     'DirectorySubmissionAction',
