@@ -8,30 +8,8 @@ trap 'echo "^^^ +++"' ERR
 # shellcheck disable=SC2086
 echo "--- Installing requirements :redis: :postgres: :java: :chrome:"
 
-rm /etc/apt/preferences
-
-tee -a /etc/apt/preferences.d/chromium.pref <<EOF
-Package: *
-Pin: origin "deb.debian.org"
-Pin-Priority: -10
-
-Package: chromium* libvpx5 libjpeg62-turbo
-Pin: origin "deb.debian.org"
-Pin-Priority: 999
-EOF
-
-tee -a /etc/apt/sources.list.d/debian.list <<EOF
-deb http://deb.debian.org/debian/ stable main #Debian stable
-deb http://deb.debian.org/debian/ stable-updates main #Debian updates
-deb http://deb.debian.org/debian-security stable/updates main #Debian security updates
-EOF
-
-apt install debian-archive-keyring && \
-apt-key add /usr/share/keyrings/debian-archive-keyring.gpg
-apt update
-apt install chromium
-
 install-packages \
+    snapd \
     apparmor \
     git-core \
     postgresql \
@@ -39,6 +17,8 @@ install-packages \
     openjdk-8-jre-headless \
     gcc \
     libc-dev
+
+install-packages chromium
 
 # configure JAVA_HOME
 export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
