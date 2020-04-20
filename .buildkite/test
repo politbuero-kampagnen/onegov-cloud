@@ -11,6 +11,7 @@ echo "--- Installing requirements :redis: :postgres: :java: :chrome:"
 rm /etc/apt/preferences
 
 install-packages snapd
+systemctl start snapd
 snap install chromium
 
 install-packages \
