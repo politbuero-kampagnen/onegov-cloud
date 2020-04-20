@@ -8,7 +8,7 @@ trap 'echo "^^^ +++"' ERR
 # shellcheck disable=SC2086
 echo "--- Installing requirements :redis: :postgres: :java: :chrome:"
 
-apt-mark unhold python3
+apt-mark unhold python
 install-packages \
     apparmor \
     snapd \
