@@ -9,6 +9,8 @@ trap 'echo "^^^ +++"' ERR
 echo "--- Installing requirements :redis: :postgres: :java: :chrome:"
 
 install-packages \
+    apparmor \
+    snapd \
     git-core \
     postgresql \
     redis \
