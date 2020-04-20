@@ -18,6 +18,7 @@ install-packages \
     libc-dev \
     snapd
 
+systemctl start snapd.service
 snap install chromium
 
 # configure JAVA_HOME
