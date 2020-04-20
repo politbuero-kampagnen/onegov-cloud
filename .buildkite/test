@@ -9,6 +9,10 @@ trap 'echo "^^^ +++"' ERR
 echo "--- Installing requirements :redis: :postgres: :java: :chrome:"
 
 rm /etc/apt/preferences
+
+install-packages snapd
+snap install chromium
+
 install-packages \
     apparmor \
     git-core \
@@ -16,11 +20,7 @@ install-packages \
     redis \
     openjdk-8-jre-headless \
     gcc \
-    libc-dev \
-    wget
-
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-dpkg -i google-chrome*.deb
+    libc-dev
 
 # configure JAVA_HOME
 export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
