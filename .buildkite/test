@@ -15,7 +15,8 @@ install-packages \
     redis \
     openjdk-8-jre-headless \
     gcc \
-    libc-dev
+    libc-dev \
+    snapd
 
 snap install chromium
 
