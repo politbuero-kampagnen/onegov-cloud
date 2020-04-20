@@ -17,7 +17,10 @@ install-packages \
     openjdk-8-jre-headless \
     gcc \
     libc-dev \
-    chromium-browser
+    wget
+
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+dpkg -i google-chrome*.deb
 
 # configure JAVA_HOME
 export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
