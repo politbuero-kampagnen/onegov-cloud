@@ -9,6 +9,7 @@ trap 'echo "^^^ +++"' ERR
 echo "--- Installing requirements :redis: :postgres: :java: :chrome:"
 
 rm /etc/apt/preferences
+install-packages snapd
 install-packages \
     apparmor \
     git-core \
