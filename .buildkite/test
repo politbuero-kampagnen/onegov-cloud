@@ -9,7 +9,7 @@ trap 'echo "^^^ +++"' ERR
 echo "--- Installing requirements :redis: :postgres: :java: :chrome:"
 
 rm /etc/apt/preferences
-install-packages snapd
+apt-get install chromium-browser
 install-packages \
     apparmor \
     git-core \
@@ -17,8 +17,7 @@ install-packages \
     redis \
     openjdk-8-jre-headless \
     gcc \
-    libc-dev \
-    chromium-browser
+    libc-dev
 
 # configure JAVA_HOME
 export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
