@@ -8,9 +8,7 @@ trap 'echo "^^^ +++"' ERR
 # shellcheck disable=SC2086
 echo "--- Installing requirements :redis: :postgres: :java: :chrome:"
 
-echo 'beginning of /etc/apt/preferences'
-cat /etc/apt/preferences
-echo 'end of /etc/apt/preferences'
+rm /etc/apt/preferences
 install-packages \
     apparmor \
     snapd \
