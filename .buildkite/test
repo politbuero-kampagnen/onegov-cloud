@@ -18,8 +18,6 @@ install-packages \
     gcc \
     libc-dev
 
-snap install chromium
-
 # configure JAVA_HOME
 export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
 
