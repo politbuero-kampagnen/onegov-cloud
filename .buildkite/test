@@ -8,7 +8,8 @@ trap 'echo "^^^ +++"' ERR
 # shellcheck disable=SC2086
 echo "--- Installing requirements :redis: :postgres: :java: :chrome:"
 
-apt-mark unhold python
+apt-mark unhold python3 python
+mv /etc/apt/preferences /etc/apt/preferences.bak
 install-packages \
     apparmor \
     snapd \
@@ -19,6 +20,7 @@ install-packages \
     gcc \
     libc-dev \
     chromium-browser
+mv /etc/apt/preferences.bak /etc/apt/preferences
 
 # configure JAVA_HOME
 export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
