@@ -9,6 +9,7 @@ trap 'echo "^^^ +++"' ERR
 echo "--- Installing requirements :redis: :postgres: :java: :chrome:"
 rm /etc/apt/preferences
 install-packages \
+    wget \
     apparmor \
     git-core \
     postgresql \
@@ -16,10 +17,20 @@ install-packages \
     openjdk-8-jre-headless \
     gcc \
     libc-dev \
-    snapd
+    fonts-liberation \
+    libappindicator3-1 \
+    libasound2 \
+    libdrm2 \
+    libgbm1 \
+    libnspr4 \
+    libnss3 \
+    libx11-xcb1 \
+    libxcb-dri3-0 \
+    libxss1 \
+    xdg-utils
 
-systemctl start snapd.service
-snap install chromium
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+dpkg -i google-chrome*.deb
 
 # configure JAVA_HOME
 export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
