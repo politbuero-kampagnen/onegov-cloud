@@ -29,8 +29,8 @@ install-packages \
     libxss1 \
     xdg-utils
 
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-dpkg -i google-chrome*.deb
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb 2>/dev/null
+dpkg -i google-chrome-stable_current_amd64.deb
 
 # configure JAVA_HOME
 export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
@@ -76,6 +76,7 @@ if [[ "$PROCESSES" == "1" ]]; then
 else
     xdist="-n $PROCESSES"
 fi
+echo "--- Running tests with xdist argument [${xdist}]"
 
 # shellcheck disable=SC2086
 run-as "$(id -u test)":test py.test \
