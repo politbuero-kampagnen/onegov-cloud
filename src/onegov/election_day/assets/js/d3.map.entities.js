@@ -27,7 +27,7 @@
             fontSizePx: 14,
             fontFamily: 'sans-serif'
         };
-        var hide_percentages;
+        var hide_percentages = false;
 
         if (params) {
             if ('data' in params) data = params.data;
