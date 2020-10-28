@@ -64,7 +64,8 @@ def view_election_candidate_by_district(self, request):
         'map_type': 'districts',
         'data_url': data_url,
         'embed_source': request.link(self, name='candidate-by-district-chart'),
-        'hide_percentages': hide_candidate_district_map_percentages(request)
+        'hide_percentages': hide_candidate_district_map_percentages(
+            request.app)
     }
 
 
@@ -97,5 +98,6 @@ def view_election_candidate_by_district_chart(self, request):
         'label_right_hand': '100%',
         'data_url': data_url,
         'options': options,
-        'hide_percentages': hide_candidate_district_map_percentages(request)
+        'hide_percentages': hide_candidate_district_map_percentages(
+            request.app)
     }

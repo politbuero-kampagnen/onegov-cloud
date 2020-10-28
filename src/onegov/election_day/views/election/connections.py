@@ -47,7 +47,7 @@ def view_election_connections_chart(self, request):
     def add_last_modified(response):
         add_last_modified_header(response, self.last_modified)
 
-    skip_rendering = hide_connections_chart(self, request)
+    skip_rendering = hide_connections_chart(self, request.app)
 
     data_url = request.link(
         self, name='connections-data') if not skip_rendering else None
@@ -101,7 +101,7 @@ def view_election_connections(self, request):
         'election': self,
         'layout': layout,
         'connections': get_connection_results_api(self, object_session(self)),
-        'skip_rendering': hide_connections_chart(self, request),
+        'skip_rendering': hide_connections_chart(self, request.app),
         'help_text': election_incomplete_text,
     }
 

@@ -67,7 +67,7 @@ def view_election_candidate_by_entity(self, request):
         'map_type': 'entities',
         'data_url': data_url,
         'embed_source': request.link(self, name='candidate-by-entity-chart'),
-        'hide_percentages': hide_candidate_entity_map_percentages(request)
+        'hide_percentages': hide_candidate_entity_map_percentages(request.app)
     }
 
 
@@ -100,5 +100,5 @@ def view_election_candidate_by_entity_chart(self, request):
         'label_right_hand': '100%',
         'data_url': data_url,
         'options': options,
-        'hide_percentages': hide_candidate_entity_map_percentages(request)
+        'hide_percentages': hide_candidate_entity_map_percentages(request.app)
     }

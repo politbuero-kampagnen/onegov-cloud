@@ -49,7 +49,7 @@ def view_election_candidates_chart(self, request):
         add_last_modified_header(response, self.last_modified)
 
     return {
-        'skip_rendering': hide_candidates_chart(self, request),
+        'skip_rendering': hide_candidates_chart(self, request.app),
         'help_text': election_incomplete_text,
         'model': self,
         'layout': DefaultLayout(self, request),
@@ -69,7 +69,7 @@ def view_election_candidates(self, request):
     """" The main view. """
 
     return {
-        'skip_rendering': hide_candidates_chart(self, request),
+        'skip_rendering': hide_candidates_chart(self, request.app),
         'help_text': election_incomplete_text,
         'election': self,
         'layout': ElectionLayout(self, request, 'candidates'),
