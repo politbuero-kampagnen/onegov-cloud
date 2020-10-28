@@ -7,6 +7,9 @@ from onegov.ballot import ElectionCompound
 from onegov.core.custom import json
 from onegov.core.utils import module_path
 from onegov.election_day import _
+from onegov.election_day.hidden_by_principal import \
+    hide_connections_chart, \
+    hide_candidates_chart
 from onegov.election_day.utils.ballot import get_ballot_data_by_district
 from onegov.election_day.utils.ballot import get_ballot_data_by_entity
 from onegov.election_day.utils.election import get_candidates_data
@@ -133,7 +136,8 @@ class D3Renderer():
     def get_candidates_chart(self, item, fmt, return_data=False):
         chart = None
         data = None
-        if isinstance(item, Election):
+        if isinstance(item, Election) and not hide_candidates_chart(
+                item, self.app):
             data = get_candidates_data(item, None)
             if data and data.get('results'):
                 chart = self.get_chart('bar', fmt, data)
@@ -142,7 +146,8 @@ class D3Renderer():
     def get_connections_chart(self, item, fmt, return_data=False):
         chart = None
         data = None
-        if isinstance(item, Election):
+        if isinstance(item, Election) and not hide_connections_chart(
+                item, self.app):
             data = get_connections_data(item, None)
             if data and data.get('links') and data.get('nodes'):
                 chart = self.get_chart(
