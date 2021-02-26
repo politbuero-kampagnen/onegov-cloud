@@ -1,8 +1,9 @@
 const jsdom = require('jsdom');
-const d3 = require('../../../../src/onegov/election_day/assets/js/d3');
-const topojson = require('../../../../src/onegov/election_day/assets/js/topojson');
-const mapChart = require('../../../../src/onegov/election_day/assets/js/d3.map.districts')(d3, topojson);
-const mapdata = require('../../../../src/onegov/election_day/static/mapdata/2017/gr.json');
+const path = '../../../../src/onegov/election_day'
+const d3 = require(path + '/assets/js/d3');
+const topojson = require(path + '/assets/js/topojson');
+const mapChart = require(path + '/assets/js/d3.map.districts')(d3, topojson);
+const mapdata = require(path + '/static/mapdata/2017/gr.json');
 const data = {
   "Albula": {
     counted: true,

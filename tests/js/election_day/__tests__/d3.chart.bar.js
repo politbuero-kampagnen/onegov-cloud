@@ -1,6 +1,7 @@
 const jsdom = require('jsdom');
-const d3 = require('../../../../src/onegov/election_day/assets/js/d3');
-const barChart = require('../../../../src/onegov/election_day/assets/js/d3.chart.bar')(d3);
+const path = '../../../../src/onegov/election_day'
+const d3 = require(path + '/assets/js/d3');
+const barChart = require(path + '/assets/js/d3.chart.bar')(d3);
 
 describe('Bar chart', () => {
   it('renders an empty svg with no data', () => {

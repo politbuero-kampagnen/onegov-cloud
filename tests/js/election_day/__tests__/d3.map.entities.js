@@ -1,8 +1,9 @@
 const jsdom = require('jsdom');
-const d3 = require('../../../../src/onegov/election_day/assets/js/d3');
-const topojson = require('../../../../src/onegov/election_day/assets/js/topojson');
-const mapChart = require('../../../../src/onegov/election_day/assets/js/d3.map.entities')(d3, topojson);
-const mapdata = require('../../../../src/onegov/election_day/static/mapdata/2017/zg.json');
+const path = '../../../../src/onegov/election_day'
+const d3 = require(path + '/assets/js/d3');
+const topojson = require(path + '/assets/js/topojson');
+const mapChart = require(path + '/assets/js/d3.map.entities')(d3, topojson);
+const mapdata = require(path + '/static/mapdata/2017/zg.json');
 const data = {
   1701: {counted: true, percentage: 60},
   1702: {counted: true, percentage: 60},
@@ -174,7 +175,7 @@ describe('Map', () => {
 
   // bern
   it('renders a communal svg', () => {
-    const communalMapdata = require('../../../../src/onegov/election_day/static/mapdata/2017/351.json');
+    const communalMapdata = require(path + '/static/mapdata/2017/351.json');
     const communalData = {
       1: {counted: true, percentage: 60},
       2: {counted: true, percentage: 60},
