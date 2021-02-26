@@ -13,7 +13,7 @@ steps:
 
   - wait
 
-  # we can save quite a bit of compute, with a separate lint step
+  # run the javascript tests
   - command: "test-container"
     label: "Jesting"
 
