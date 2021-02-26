@@ -5,18 +5,12 @@ set -euo pipefail
 trap 'echo "^^^ +++"' ERR
 
 echo "--- Installing prerequisites"
+pip install nodeenv
 node=$(nodeenv --list 2>&1 | tr '\t' '\n' | grep -E '^12' | tail -n 1)
 
 nodeenv --node="$node" /tmp/node
-
-echo "--- jest"
-/tmp/node/bin/npm install -g jest
-
-echo "--- jsdom"
-/tmp/node/bin/npm install -g jsdom
-
-echo "--- Creating empty package.json"
-echo "{}" > package.json
+/tmp/node/bin/npm install -g jest jsdom
 
 echo "--- Running Jest"
+echo "{}" > package.json
 jest
