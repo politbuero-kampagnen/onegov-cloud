@@ -8,7 +8,12 @@ echo "--- Installing prerequisites"
 node=$(nodeenv --list 2>&1 | tr '\t' '\n' | grep -E '^12' | tail -n 1)
 
 nodeenv --node="$node" /tmp/node
-/tmp/node/bin/npm install -g jest jsdom
+
+echo "--- jest"
+/tmp/node/bin/npm install -g jest
+
+echo "--- jsdom"
+/tmp/node/bin/npm install -g jsdom
 
 echo "--- Creating empty package.json"
 echo "{}" > package.json
