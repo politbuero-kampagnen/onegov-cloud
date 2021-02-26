@@ -8,7 +8,7 @@ echo "--- Installing prerequisites"
 node=$(nodeenv --list 2>&1 | tr '\t' '\n' | grep -E '^12' | tail -n 1)
 
 nodeenv --node="$node" /tmp/node
-/tmp/node/bin/npm install -g jest jsdom@9.9.1
+/tmp/node/bin/npm install -g jest jsdom
 echo "{}" > package.json
 
 echo "--- Running Jest"
