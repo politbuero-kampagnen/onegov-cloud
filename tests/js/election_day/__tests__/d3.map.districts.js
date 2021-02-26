@@ -83,7 +83,7 @@ describe('Map', () => {
     });
 
     chart(document.body);
-    // require('fs').writeFile("map@1.svg", document.svg());
+    // require('fs').writeFile("map@1.svg", document.svg(), function(err, result) {});
     expect(document.svg()).toMatchSnapshot();
     expect(chart.width()).toBe(1);
   });
@@ -98,7 +98,7 @@ describe('Map', () => {
     });
 
     chart(document.body);
-    // require('fs').writeFile("map@200.svg", document.svg());
+    // require('fs').writeFile("map@200.svg", document.svg(), function(err, result) {});
     expect(document.svg()).toMatchSnapshot();
     expect(chart.width()).toBe(200);
   });
@@ -113,7 +113,7 @@ describe('Map', () => {
     });
 
     chart(document.body);
-    // require('fs').writeFile("map@500.svg", document.svg());
+    // require('fs').writeFile("map@500.svg", document.svg(), function(err, result) {});
     expect(document.svg()).toMatchSnapshot();
     expect(chart.width()).toBe(500);
   });
@@ -128,7 +128,7 @@ describe('Map', () => {
     });
 
     chart(document.body);
-    // require('fs').writeFile("map@700.svg", document.svg());
+    // require('fs').writeFile("map@700.svg", document.svg(), function(err, result) {});
     expect(document.svg()).toMatchSnapshot();
     expect(chart.width()).toBe(700);
   });
@@ -143,7 +143,7 @@ describe('Map', () => {
     });
 
     chart(document.body);
-    // require('fs').writeFile("map@2000.svg", document.svg());
+    // require('fs').writeFile("map@2000.svg", document.svg(), function(err, result) {});
     expect(document.svg()).toMatchSnapshot();
     expect(chart.width()).toBe(2000);
   });
@@ -159,7 +159,7 @@ describe('Map', () => {
     });
 
     chart(document.body);
-    // require('fs').writeFile("map@r.svg", document.svg());
+    // require('fs').writeFile("map@r.svg", document.svg(), function(err, result) {});
     expect(document.svg()).toMatchSnapshot();
     expect(chart.width()).toBe(700);
   });
@@ -175,7 +175,7 @@ describe('Map', () => {
     });
 
     chart(document.body);
-    // require('fs').writeFile("map@b.svg", document.svg());
+    // require('fs').writeFile("map@b.svg", document.svg(), function(err, result) {});
     expect(document.svg()).toMatchSnapshot();
     expect(chart.width()).toBe(700);
   });
@@ -207,7 +207,7 @@ describe('Map', () => {
     });
 
     chart(document.body);
-    // require('fs').writeFile("map@partial.svg", document.svg());
+    // require('fs').writeFile("map@partial.svg", document.svg(), function(err, result) {});
     expect(document.svg()).toMatchSnapshot();
     expect(chart.width()).toBe(700);
   });
