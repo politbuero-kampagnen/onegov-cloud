@@ -69,7 +69,7 @@ describe('Bar chart', () => {
       data: data
     });
     chart(document.body);
-    require('fs').writeFile("bar@0.svg", document.svg());
+    //require('fs').writeFile("bar@0.svg", document.svg());
     expect(document.svg()).toMatchSnapshot();
     expect(chart.height()).toBe(35*26+40);
     expect(chart.width()).toBe(0+20);
@@ -82,7 +82,7 @@ describe('Bar chart', () => {
       data: data
     });
     chart(document.body);
-    require('fs').writeFile("bar@100.svg", document.svg());
+    //require('fs').writeFile("bar@100.svg", document.svg());
     expect(document.svg()).toMatchSnapshot();
     expect(chart.height()).toBe(35*26+40);
     expect(chart.width()).toBe(100+20);
@@ -95,7 +95,7 @@ describe('Bar chart', () => {
       data: data
     });
     chart(document.body);
-    require('fs').writeFile("bar@500.svg", document.svg());
+    //require('fs').writeFile("bar@500.svg", document.svg());
     expect(document.svg()).toMatchSnapshot();
     expect(chart.height()).toBe(35*26+40);
     expect(chart.width()).toBe(500+20);
@@ -108,7 +108,7 @@ describe('Bar chart', () => {
       data: data
     });
     chart(document.body);
-    require('fs').writeFile("bar@700.svg", document.svg());
+    //require('fs').writeFile("bar@700.svg", document.svg());
     expect(document.svg()).toMatchSnapshot();
     expect(chart.height()).toBe(35*26+40);
     expect(chart.width()).toBe(700+20);
@@ -121,7 +121,7 @@ describe('Bar chart', () => {
       data: data
     });
     chart(document.body);
-    require('fs').writeFile("bar@2000.svg", document.svg());
+    //require('fs').writeFile("bar@2000.svg", document.svg());
     expect(document.svg()).toMatchSnapshot();
     expect(chart.height()).toBe(35*26+40);
     expect(chart.width()).toBe(2000+20);

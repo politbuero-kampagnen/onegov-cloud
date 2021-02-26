@@ -86,3 +86,6 @@ bin
 lib
 share
 pyvenv.cfg
+
+# npm / jest
+package-lock.json
