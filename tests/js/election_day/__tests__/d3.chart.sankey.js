@@ -1,7 +1,7 @@
 const jsdom = require('jsdom');
-var d3 = require('../d3');
-require('../d3.sankey')(d3);
-const sankeyChart = require('../d3.chart.sankey')(d3);
+const d3 = require('../../../../src/onegov/election_day/assets/js/d3');
+require('../../../../src/onegov/election_day/assets/js/d3.sankey')(d3);
+const sankeyChart = require('../../../../src/onegov/election_day/assets/js/d3.chart.sankey')(d3);
 
 const data = {
   "nodes": [

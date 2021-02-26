@@ -1,6 +1,6 @@
 const jsdom = require('jsdom');
-const d3 = require('../d3');
-const groupedChart = require('../d3.chart.grouped')(d3);
+const d3 = require('../../../../src/onegov/election_day/assets/js/d3');
+const groupedChart = require('../../../../src/onegov/election_day/assets/js/d3.chart.grouped')(d3);
 
 const results = [
   {"active": false, "group": "A", "value": {"front": 0, "back": 0}, "item": "1000"},

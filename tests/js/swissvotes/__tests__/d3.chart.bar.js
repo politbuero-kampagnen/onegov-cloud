@@ -1,6 +1,6 @@
 const jsdom = require('jsdom');
-const d3 = require('../d3');
-const barChart = require('../d3.chart.bar')(d3);
+const d3 = require('../../../../src/onegov/swissvotes/assets/js/d3');
+const barChart = require('../../../../src/onegov/swissvotes/assets/js/d3.chart.bar')(d3);
 const data  = {
   "results": [
     {"text": "110.9%", "yea": 110.9, "none": 0, "nay": -10.9},
