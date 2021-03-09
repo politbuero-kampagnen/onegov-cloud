@@ -9,7 +9,8 @@ pip install nodeenv
 node=$(nodeenv --list 2>&1 | tr '\t' '\n' | grep -E '^12' | tail -n 1)
 
 nodeenv --node="$node" /tmp/node
-/tmp/node/bin/npm install -g jest jsdom
+bash /tmp/node/bin/activate
+npm install jest jsdom
 
 echo "--- Running Jest"
 echo "{}" > package.json
