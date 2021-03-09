@@ -177,7 +177,6 @@
                             return height - options.axisHeight - scale.y.back(d.value.back) + 1;
                         })
                         .style('fill', function(d) {
-                            console.log(d);
                             if (d.color) return d.color;
                             return d.active ? options.colorActive : options.colorInactive;
                         })
