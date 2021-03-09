@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# automatically open the log output group if there's an error
+trap 'echo "^^^ +++"' ERR
+
+echo "--- Installing prerequisites"
+pip install nodeenv
+node=$(nodeenv --list 2>&1 | tr '\t' '\n' | grep -E '^12' | tail -n 1)
+
+nodeenv --node="$node" /tmp/node
+/tmp/node/bin/npm install -g jest jsdom
+
+echo "--- Running Jest"
+echo "{}" > package.json
+jest
