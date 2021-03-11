@@ -11,9 +11,8 @@ node=$(nodeenv --list 2>&1 | tr '\t' '\n' | grep -E '^12' | tail -n 1)
 nodeenv --node="$node" /tmp/node
 
 # shellcheck disable=SC1091
-source /tmp/node/bin/activate
-npm install jest jsdom
+/tmp/node/bin/npm install jest jsdom
 
 echo "--- Running Jest"
-echo "{}" > package.json
-jest
+echo "{\"scripts\":{\"test\": \"jest\"}}" > package.json
+/tmp/node/bin/npm test
