@@ -11,7 +11,7 @@ node=$(nodeenv --list 2>&1 | tr '\t' '\n' | grep -E '^12' | tail -n 1)
 nodeenv --node="$node" /tmp/node
 
 # shellcheck disable=SC1091
-. /tmp/node/bin/activate
+source /tmp/node/bin/activate
 npm install jest jsdom
 
 echo "--- Running Jest"
