@@ -4,13 +4,18 @@ set -euo pipefail
 # automatically open the log output group if there's an error
 trap 'echo "^^^ +++"' ERR
 
-echo "--- Installing prerequisites"
+echo "--- Installing node"
 pip install nodeenv
 node=$(nodeenv --list 2>&1 | tr '\t' '\n' | grep -E '^12' | tail -n 1)
 
 nodeenv --node="$node" /tmp/node
-/tmp/node/bin/npm install -g jest jsdom
+
+echo "--- Installing dependencies"
+cd /app/src/tests/js
+/tmp/node/bin/npm install jest jsdom
+
+echo "--- Writing config"
+echo "{\"scripts\":{\"test\": \"jest\"}}" > package.json
 
 echo "--- Running Jest"
-echo "{}" > package.json
-jest
+/tmp/node/bin/npm test
