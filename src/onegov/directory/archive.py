@@ -31,7 +31,15 @@ class FieldParser(object):
         self.archive_path = archive_path
 
     def get_field(self, key):
-        return self.fields_by_human_id.get(key) or self.fields_by_id.get(key)
+        """
+        CSV Files header parsing is inconsistent with the the internal id (
+        field.id) of the field. The headers are lovercased, so that the first
+        will not yield the field, the second will also not success because
+        characters like ( are not replaced by underscores.
+        """
+        return self.fields_by_human_id.get(key) or \
+            self.fields_by_id.get(key) or \
+            self.fields_by_id.get(as_internal_id(key))
 
     def parse_fileinput(self, key, value, field):
         if not value:
@@ -88,7 +96,7 @@ class DirectoryArchiveReader(object):
         """ Reads the archive resulting in a dictionary and entries.
 
         :param target:
-            Uses the given dictionary as a target for the read. Otherwise,
+            Uses the given directory as a target for the read. Otherwise,
             a new directory is created in memory (default).
 
         :param skip_existing:
@@ -107,11 +115,12 @@ class DirectoryArchiveReader(object):
             Called with the newly added entry, right after it has been added.
 
         """
-
-        directory = target or Directory()
+        meta_data = self.read_metadata()
+        directory = target or Directory.get_polymorphic_class(
+            meta_data.get('type'), Directory)()
 
         if apply_metadata:
-            self.apply_metadata(directory, self.read_metadata())
+            directory = self.apply_metadata(directory, meta_data)
 
         if skip_existing and target:
             existing = {
@@ -139,7 +148,6 @@ class DirectoryArchiveReader(object):
                     continue
 
                 existing.add(name)
-
             try:
                 entry = directory.add(values)
             except KeyError as e:
@@ -171,7 +179,6 @@ class DirectoryArchiveReader(object):
 
         directory.title = metadata['title']
         directory.lead = metadata['lead']
-        directory.type = metadata['type']
         directory.structure = metadata['structure']
         directory.configuration = DirectoryConfiguration(
             **metadata['configuration']
@@ -229,10 +236,11 @@ class DirectoryArchiveWriter(object):
     def write(self, directory, *args, **kwargs):
         """ Writes the given directory. """
         entry_filter = kwargs.pop('entry_filter', None)
+        query = kwargs.pop('query', None)
         assert self.format in ('xlsx', 'csv', 'json')
 
         self.write_directory_metadata(directory)
-        self.write_directory_entries(directory, entry_filter)
+        self.write_directory_entries(directory, entry_filter, query)
 
     def write_directory_metadata(self, directory):
         """ Writes the metadata. """
@@ -249,9 +257,10 @@ class DirectoryArchiveWriter(object):
         }
         self.write_json(self.path / 'metadata.json', metadata)
 
-    def write_directory_entries(self, directory, entry_filter=None):
+    def write_directory_entries(
+            self, directory, entry_filter=None, query=None):
         """ Writes the directory entries. Allows filtering with custom
-        entry_filter function. """
+        entry_filter function as well as passing a query object """
 
         fields = directory.fields
         paths = {}
@@ -289,7 +298,7 @@ class DirectoryArchiveWriter(object):
 
             return data
 
-        entries = directory.entries
+        entries = query.all() if query else directory.entries
         if entry_filter:
             entries = entry_filter(entries)
 
