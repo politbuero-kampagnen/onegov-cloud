@@ -11,8 +11,6 @@ steps:
       CONTAINER: "onegov-cloud:head"
       CONTAINER_TEST_SCRIPT: ".buildkite/lint"
 
-  - wait
-
   # run the javascript tests
   - command: "test-container"
     label: "Jesting"
