@@ -1,6 +1,18 @@
 steps:
 
-  # we can save quite a bit of compute, with a separate lint step
+  # build the container…
+  - command: "build-container"
+    label: "Building"
+
+    agents:
+      - queue=builder
+
+    env:
+      CONTAINER: "onegov-cloud:head"
+
+  - wait
+
+  # check linting
   - command: "test-container"
     label: "Linting"
 
@@ -21,20 +33,6 @@ steps:
     env:
       CONTAINER: "onegov-cloud:head"
       CONTAINER_TEST_SCRIPT: ".buildkite/jest"
-
-  - wait
-
-  # build the container…
-  - command: "build-container"
-    label: "Building"
-
-    agents:
-      - queue=builder
-
-    env:
-      CONTAINER: "onegov-cloud:head"
-
-  - wait
 
   # …before running tests
   - command: "test-container"
