@@ -34,7 +34,7 @@ steps:
       CONTAINER: "onegov-cloud:head"
       CONTAINER_TEST_SCRIPT: ".buildkite/jest"
 
-  # …before running tests
+  # run the python tests
   - command: "test-container"
     label: "Testing"
 
