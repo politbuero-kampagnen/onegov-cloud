@@ -1,31 +1,5 @@
 steps:
 
-  # we can save quite a bit of compute, with a separate lint step
-  - command: "test-container"
-    label: "Linting"
-
-    agents:
-      - queue=generic
-
-    env:
-      CONTAINER: "onegov-cloud:head"
-      CONTAINER_TEST_SCRIPT: ".buildkite/lint"
-
-  - wait
-
-  # run the javascript tests
-  - command: "test-container"
-    label: "Jesting"
-
-    agents:
-      - queue=generic
-
-    env:
-      CONTAINER: "onegov-cloud:head"
-      CONTAINER_TEST_SCRIPT: ".buildkite/jest"
-
-  - wait
-
   # build the container…
   - command: "build-container"
     label: "Building"
@@ -37,6 +11,28 @@ steps:
       CONTAINER: "onegov-cloud:head"
 
   - wait
+
+  # check linting
+  - command: "test-container"
+    label: "Linting"
+
+    agents:
+      - queue=generic
+
+    env:
+      CONTAINER: "onegov-cloud:head"
+      CONTAINER_TEST_SCRIPT: ".buildkite/lint"
+
+  # run the javascript tests
+  - command: "test-container"
+    label: "Jesting"
+
+    agents:
+      - queue=generic
+
+    env:
+      CONTAINER: "onegov-cloud:head"
+      CONTAINER_TEST_SCRIPT: ".buildkite/jest"
 
   # …before running tests
   - command: "test-container"
