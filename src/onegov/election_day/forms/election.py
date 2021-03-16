@@ -177,7 +177,10 @@ class ElectionForm(Form):
     def parse_colors(self, text):
         if not text:
             return {}
-        result = dict(findall(r'(.+)\s+(\#[0-9a-fA-F]{6})', text))
+        result = {
+            key.strip(): value
+            for key, value in findall(r'(.+)\s+(\#[0-9a-fA-F]{6})', text)
+        }
         if len(text.strip().splitlines()) != len(result):
             raise ValueError('Could not parse colors')
         return result
