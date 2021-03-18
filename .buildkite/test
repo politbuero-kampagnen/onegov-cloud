@@ -55,7 +55,6 @@ cd /app/src
 pip install '.[test]' \
     pytest-test-groups \
     pytest-cov \
-    pytest-xdist \
     --quiet
 
 # reset the build assets again (like in the upstream container script),
