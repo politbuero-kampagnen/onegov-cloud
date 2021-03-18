@@ -5,6 +5,7 @@ from onegov.election_day import _
 from onegov.election_day.layouts import DefaultLayout
 from onegov.form import Form
 from onegov.form.fields import ChosenSelectMultipleField
+from onegov.form.fields import PanelField
 from re import findall
 from sqlalchemy import or_
 from wtforms import BooleanField
@@ -157,20 +158,29 @@ class ElectionForm(Form):
         render_kw={'lang': 'rm'}
     )
 
-    colors = TextAreaField(
-        label=_("Colors"),
-        render_kw={'rows': 12},
-        description=(
+    color_hint = PanelField(
+        label=_('Color suggestions'),
+        text=(
             'AL #a74c97\n'
-            'CVP #ff6300\n'
+            'BDP #a9cf00\n'
+            'CVP #d28b00\n'
             'EDU #7f6b65\n'
             'EVP #e3c700\n'
-            'FDP #4068c8\n'
+            'FDP #0084c7\n'
             'GLP #aeca00\n'
-            'Grüne #4abb3e\n'
+            'GPS #54ba00\n'
             'Piraten #333333\n'
-            'SP #db3c27\n'
-            'SVP #3f841a\n'
+            'SP #c31906\n'
+            'SVP #408b3d\n'
+        ),
+        kind='',
+    )
+
+    colors = TextAreaField(
+        label=_('Colors'),
+        render_kw={'rows': 12},
+        description=(
+
         )
     )
 

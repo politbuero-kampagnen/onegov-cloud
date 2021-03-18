@@ -1,83 +1,17 @@
 from datetime import date
 from onegov.election_day.utils.common import LastUpdatedOrderedDict
+from onegov.election_day.utils.election import get_aggregated_list_results
 from onegov.election_day.utils.election import get_candidates_data
 from onegov.election_day.utils.election import get_candidates_results
 from onegov.election_day.utils.election import get_connection_results_api
-# from onegov.election_day.utils.election import get_elected_candidates
+from onegov.election_day.utils.election import get_elected_candidates
+from onegov.election_day.utils.election import get_list_results
+from onegov.election_day.utils.election import get_lists_data
+from onegov.election_day.utils.election import get_lists_panachage_data
 from tests.onegov.election_day.common import print_errors
 
 
-def test_candidates_utils_majorz(import_test_datasets, session):
-    election, errors = import_test_datasets(
-        'internal',
-        'election',
-        'zg',
-        'canton',
-        'majorz',
-        date_=date(2015, 10, 18),
-        number_of_mandates=2,
-        dataset_name='staenderatswahl-2015',
-        expats=False
-    )
-    assert not errors
-
-    election.absolute_majoriy = 18191
-    election.majority_type = 'absolute'
-
-    assert tuple(get_candidates_results(election, session)) == (
-        (('Hegglin', 'Peter', True, '', 24132, None, None),
-         ('Eder', 'Joachim', True, '', 23620, None, None),
-         ('Brandenberg', 'Manuel', False, '', 10997, None, None),
-         ('Gysel', 'Barbara', False, '', 6612, None, None),
-         ('Lustenberger', 'Andreas', False, '', 5691, None, None),
-         ('Thöni', 'Stefan', False, '', 1709, None, None))
-    )
-
-    assert get_candidates_data(election, None) == {
-        'majority': 18191,
-        'title': 'majorz_internal_staenderatswahl-2015',
-        'results': [
-            {
-                'class': 'active',
-                'color': '',
-                'text': 'Hegglin Peter',
-                'value': 24132
-            },
-            {
-                'class': 'active',
-                'color': '',
-                'text': 'Eder Joachim',
-                'value': 23620
-            },
-            {
-                'class': 'inactive',
-                'color': '',
-                'text': 'Brandenberg Manuel',
-                'value': 10997
-            },
-            {
-                'class': 'inactive',
-                'color': '',
-                'text': 'Gysel Barbara',
-                'value': 6612
-            },
-            {
-                'class': 'inactive',
-                'color': '',
-                'text': 'Lustenberger Andreas',
-                'value': 5691
-            },
-            {
-                'class': 'inactive',
-                'color': '',
-                'text': 'Thöni Stefan',
-                'value': 1709
-            }
-        ],
-    }
-
-
-def test_candidates_utils_majorz_parties(import_test_datasets, session):
+def test_election_utils_majorz(import_test_datasets, session):
     election, errors = import_test_datasets(
         'internal',
         'election',
@@ -91,6 +25,8 @@ def test_candidates_utils_majorz_parties(import_test_datasets, session):
     )
     assert not errors
 
+    election.absolute_majoriy = 18191
+    election.majority_type = 'absolute'
     election.colors = {
         'ALG': '#a74c97',
         'CVP': '#ff6300',
@@ -109,7 +45,7 @@ def test_candidates_utils_majorz_parties(import_test_datasets, session):
     )
 
     assert get_candidates_data(election, None) == {
-        'majority': 0,
+        'majority': 18191,
         'title': 'majorz_internal_staenderatswahl-2015-parties',
         'results': [
             {
@@ -151,8 +87,16 @@ def test_candidates_utils_majorz_parties(import_test_datasets, session):
         ],
     }
 
+    assert tuple(get_list_results(election, session)) == tuple()
 
-def test_candidates_utils_proporz(import_test_datasets, session):
+    assert get_lists_data(election, None) == {
+        'majority': None,
+        'title': 'majorz_internal_staenderatswahl-2015-parties',
+        'results': [],
+    }
+
+
+def test_election_utils_proporz(import_test_datasets, session):
     election, errors = import_test_datasets(
         'internal',
         'election',
@@ -245,6 +189,151 @@ def test_candidates_utils_proporz(import_test_datasets, session):
                 'color': '#999',
                 'text': 'Pezzatti Bruno',
                 'value': 10174
+            }
+        ],
+    }
+
+    assert tuple(get_list_results(election, session)) == (
+        ('SVP', 30532, '15', 1),
+        ('CVP', 24335, '4', 1),
+        ('FDP Ost', 16285, '6', 1),
+        ('SP', 8868, '10', 0),
+        ('CVP Junge', 6521, '5', 0),
+        ('ALG', 5844, '1', 0),
+        ('SVP WuG', 4436, '17', 0),
+        ('FDP West', 4299, '7', 0),
+        ('glp', 4178, '8', 0),
+        ('SP Männer', 3314, '13', 0),
+        ('SP Frauen', 2186, '11', 0),
+        ('ALG Bildung', 1701, '3', 0),
+        ('SP Juso', 1333, '12', 0),
+        ('Piraten', 1128, '9', 0),
+        ('ALG Junge', 807, '2', 0),
+        ('SVP Int.', 575, '16', 0),
+        ('SP Migrant.', 347, '14', 0)
+    )
+
+    assert get_lists_data(election, None) == {
+        'majority': None,
+        'title': 'proporz_internal_nationalratswahlen-2015',
+        'results': [
+            {
+                'class': 'active',
+                'color': '#3f841a',
+                'text': 'SVP',
+                'value': 30532,
+                'value2': 1},
+            {
+                'class': 'active',
+                'color': '#ff6300',
+                'text': 'CVP',
+                'value': 24335,
+                'value2': 1
+            },
+            {
+                'class': 'active',
+                'color': '#999',
+                'text': 'FDP Ost',
+                'value': 16285,
+                'value2': 1
+            },
+            {
+                'class': 'inactive',
+                'color': '#999',
+                'text': 'SP',
+                'value': 8868,
+                'value2': 0
+            },
+            {
+                'class': 'inactive',
+                'color': '#999',
+                'text': 'CVP Junge',
+                'value': 6521,
+                'value2': 0
+            },
+            {
+                'class': 'inactive',
+                'color': '#999',
+                'text': 'ALG',
+                'value': 5844,
+                'value2': 0
+            },
+            {
+                'class': 'inactive',
+                'color': '#999',
+                'text': 'SVP WuG',
+                'value': 4436,
+                'value2': 0
+            },
+            {
+                'class': 'inactive',
+                'color': '#999',
+                'text': 'FDP West',
+                'value': 4299,
+                'value2': 0
+            },
+            {
+                'class': 'inactive',
+                'color': '#999',
+                'text': 'glp',
+                'value': 4178,
+                'value2': 0
+            },
+            {
+                'class': 'inactive',
+                'color': '#999',
+                'text': 'SP Männer',
+                'value': 3314,
+                'value2': 0
+            },
+            {
+                'class': 'inactive',
+                'color': '#999',
+                'text': 'SP Frauen',
+                'value': 2186,
+                'value2': 0
+            },
+            {
+                'class': 'inactive',
+                'color': '#999',
+                'text': 'ALG Bildung',
+                'value': 1701,
+                'value2': 0
+            },
+            {
+                'class': 'inactive',
+                'color': '#999',
+                'text': 'SP Juso',
+                'value': 1333,
+                'value2': 0
+            },
+            {
+                'class': 'inactive',
+                'color': '#999',
+                'text': 'Piraten',
+                'value': 1128,
+                'value2': 0
+            },
+            {
+                'class': 'inactive',
+                'color': '#999',
+                'text': 'ALG Junge',
+                'value': 807,
+                'value2': 0
+            },
+            {
+                'class': 'inactive',
+                'color': '#999',
+                'text': 'SVP Int.',
+                'value': 575,
+                'value2': 0
+            },
+            {
+                'class': 'inactive',
+                'color': '#999',
+                'text': 'SP Migrant.',
+                'value': 347,
+                'value2': 0
             }
         ],
     }
