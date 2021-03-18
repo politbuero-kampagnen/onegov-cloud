@@ -70,9 +70,16 @@ adduser --disabled-password --gecos "" test
 
 GROUP_COUNT="$BUILDKITE_PARALLEL_JOB_COUNT"
 GROUP="$(( BUILDKITE_PARALLEL_JOB + 1 ))"
+PROCESSES="$(($(grep -c ^processor /proc/cpuinfo) - 1))"
 
-echo "--- Running tests :pytest: (group: $GROUP/$GROUP_COUNT)"
+echo "--- Running tests :pytest: (group: $GROUP/$GROUP_COUNT, processes: $PROCESSES)"
 set +x
+
+if [[ "$PROCESSES" == "1" ]]; then
+    xdist=""
+else
+    xdist="-n $PROCESSES"
+fi
 
 COMMIT="$BUILDKITE_COMMIT"
 COVERAGE_REPORT="/tmp/coverage.xml"
@@ -80,10 +87,9 @@ export COVERAGE_FILE="/tmp/.coverage"
 
 # shellcheck disable=SC2086
 run-as "$(id -u test)":test py.test \
-    -n 4 \
     -o cache_dir=/tmp/pytest \
     --test-group $GROUP \
-    --test-group-count $GROUP_COUNT \
+    --test-group-count $GROUP_COUNT $xdist \
     --cov \
     --cov-report xml:$COVERAGE_REPORT \
     tests
