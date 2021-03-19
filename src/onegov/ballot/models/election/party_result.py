@@ -32,6 +32,3 @@ class PartyResult(Base, TimestampMixin):
 
     #: year
     year = Column(Integer, nullable=False, default=lambda: 0)
-
-    #: color code
-    color = Column(Text, nullable=True)

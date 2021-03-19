@@ -142,7 +142,6 @@ def test_proporz_election_create_all_models(session):
         votes=0,
         total_votes=100,
         name='Libertarian',
-        color='black'
     )
 
     session.add(party_result)
@@ -578,13 +577,13 @@ def test_proporz_election_results(session):
     election.party_results.append(
         PartyResult(
             name='Republican Party', number_of_mandates=1, votes=10,
-            total_votes=100, color='red'
+            total_votes=100
         )
     )
     election.party_results.append(
         PartyResult(
             name='Democratic Party', number_of_mandates=1, votes=20,
-            total_votes=100, color='blue'
+            total_votes=100
         )
     )
 
@@ -1056,7 +1055,6 @@ def test_proporz_election_export_parties(session):
             votes=0,
             total_votes=100,
             name='Libertarian',
-            color='black',
             year=2012
         )
     )
@@ -1066,7 +1064,6 @@ def test_proporz_election_export_parties(session):
             votes=2,
             total_votes=50,
             name='Libertarian',
-            color='black',
             year=2016
         )
     )
@@ -1076,7 +1073,6 @@ def test_proporz_election_export_parties(session):
             votes=1,
             total_votes=100,
             name='Conservative',
-            color='red',
             year=2012
         )
     )
@@ -1086,13 +1082,11 @@ def test_proporz_election_export_parties(session):
             votes=3,
             total_votes=50,
             name='Conservative',
-            color='red',
             year=2016
         )
     )
     assert election.export_parties() == [
         {
-            'color': 'red',
             'mandates': 3,
             'name': 'Conservative',
             'id': 0,
@@ -1104,7 +1098,6 @@ def test_proporz_election_export_parties(session):
             'panachage_votes_from_999': '',
 
         }, {
-            'color': 'black',
             'mandates': 2,
             'name': 'Libertarian',
             'id': 1,
@@ -1115,7 +1108,6 @@ def test_proporz_election_export_parties(session):
             'panachage_votes_from_1': '',
             'panachage_votes_from_999': '',
         }, {
-            'color': 'red',
             'mandates': 1,
             'name': 'Conservative',
             'id': 0,
@@ -1126,7 +1118,6 @@ def test_proporz_election_export_parties(session):
             'panachage_votes_from_1': '',
             'panachage_votes_from_999': '',
         }, {
-            'color': 'black',
             'mandates': 0,
             'name': 'Libertarian',
             'id': 1,
@@ -1156,7 +1147,6 @@ def test_proporz_election_export_parties(session):
     )
     assert election.export_parties() == [
         {
-            'color': 'red',
             'mandates': 3,
             'name': 'Conservative',
             'id': 0,
@@ -1169,7 +1159,6 @@ def test_proporz_election_export_parties(session):
             'panachage_votes_from_999': 4,
 
         }, {
-            'color': 'black',
             'mandates': 2,
             'name': 'Libertarian',
             'id': 1,
@@ -1181,7 +1170,6 @@ def test_proporz_election_export_parties(session):
             'panachage_votes_from_2': '',
             'panachage_votes_from_999': '',
         }, {
-            'color': '',
             'mandates': '',
             'name': 'Other',
             'id': 2,
@@ -1193,7 +1181,6 @@ def test_proporz_election_export_parties(session):
             'panachage_votes_from_2': '',
             'panachage_votes_from_999': '',
         }, {
-            'color': 'red',
             'mandates': 1,
             'name': 'Conservative',
             'id': 0,
@@ -1205,7 +1192,6 @@ def test_proporz_election_export_parties(session):
             'panachage_votes_from_2': '',
             'panachage_votes_from_999': '',
         }, {
-            'color': 'black',
             'mandates': 0,
             'name': 'Libertarian',
             'id': 1,
@@ -1217,7 +1203,6 @@ def test_proporz_election_export_parties(session):
             'panachage_votes_from_2': '',
             'panachage_votes_from_999': '',
         }, {
-            'color': '',
             'mandates': '',
             'name': 'Other',
             'id': 2,

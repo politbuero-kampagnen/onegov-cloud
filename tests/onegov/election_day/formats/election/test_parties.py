@@ -75,27 +75,26 @@ def test_import_party_results(session):
                     'total_votes',
                     'id',
                     'name',
-                    'color',
                     'mandates',
                     'votes',
                 )),
-                '2015,10000,1,P1,#123456,1,5000',
-                '2011,10000,1,P1,#123456,0,3000',
-                '2015,10000,2,P2,#aabbcc,0,5000',
-                '2011,10000,2,P2,#aabbcc,1,7000',
+                '2015,10000,1,P1,1,5000',
+                '2011,10000,1,P1,0,3000',
+                '2015,10000,2,P2,0,5000',
+                '2011,10000,2,P2,1,7000',
             ))
         ).encode('utf-8')), 'text/plain'
     )
 
     assert not errors
     assert sorted([
-        (r.year, r.name, r.color, r.votes, r.total_votes, r.number_of_mandates)
+        (r.year, r.name, r.votes, r.total_votes, r.number_of_mandates)
         for r in election.party_results
     ]) == [
-        (2011, 'P1', '#123456', 3000, 10000, 0),
-        (2011, 'P2', '#aabbcc', 7000, 10000, 1),
-        (2015, 'P1', '#123456', 5000, 10000, 1),
-        (2015, 'P2', '#aabbcc', 5000, 10000, 0)
+        (2011, 'P1', 3000, 10000, 0),
+        (2011, 'P2', 7000, 10000, 1),
+        (2015, 'P1', 5000, 10000, 1),
+        (2015, 'P2', 5000, 10000, 0)
     ]
 
 
@@ -125,17 +124,16 @@ def test_import_party_results_panachage_invalid_values(
                         'total_votes',
                         'id',
                         'name',
-                        'color',
                         'mandates',
                         'votes',
                         f'panachage_votes_from_{wrong_id}',
                         'panachage_votes_from_2',
                         'panachage_votes_from_999'
                     )),
-                    '2015,10000,1,P1,#123456,1,5000,10,11,12',
-                    '2011,10000,1,P1,#123456,0,3000,13,14,15',
-                    '2015,10000,2,P2,#aabbcc,0,5000,20,21,22',
-                    '2011,10000,2,P2,#aabbcc,1,7000,23,24,25',
+                    '2015,10000,1,P1,1,5000,10,11,12',
+                    '2011,10000,1,P1,0,3000,13,14,15',
+                    '2015,10000,2,P2,0,5000,20,21,22',
+                    '2011,10000,2,P2,1,7000,23,24,25',
                 ))
                 ).encode('utf-8')), 'text/plain'
     )
@@ -164,30 +162,29 @@ def test_import_party_results_with_panachage(session):
                     'total_votes',
                     'id',
                     'name',
-                    'color',
                     'mandates',
                     'votes',
                     'panachage_votes_from_1',
                     'panachage_votes_from_2',
                     'panachage_votes_from_999'
                 )),
-                '2015,10000,1,P1,#123456,1,5000,10,11,12',
-                '2011,10000,1,P1,#123456,0,3000,13,14,15',
-                '2015,10000,2,P2,#aabbcc,0,5000,20,21,22',
-                '2011,10000,2,P2,#aabbcc,1,7000,23,24,25',
+                '2015,10000,1,P1,1,5000,10,11,12',
+                '2011,10000,1,P1,0,3000,13,14,15',
+                '2015,10000,2,P2,0,5000,20,21,22',
+                '2011,10000,2,P2,1,7000,23,24,25',
             ))
         ).encode('utf-8')), 'text/plain'
     )
 
     assert not errors
     assert sorted([
-        (r.year, r.name, r.color, r.votes, r.total_votes, r.number_of_mandates)
+        (r.year, r.name, r.votes, r.total_votes, r.number_of_mandates)
         for r in election.party_results
     ]) == [
-        (2011, 'P1', '#123456', 3000, 10000, 0),
-        (2011, 'P2', '#aabbcc', 7000, 10000, 1),
-        (2015, 'P1', '#123456', 5000, 10000, 1),
-        (2015, 'P2', '#aabbcc', 5000, 10000, 0)
+        (2011, 'P1', 3000, 10000, 0),
+        (2011, 'P2', 7000, 10000, 1),
+        (2015, 'P1', 5000, 10000, 1),
+        (2015, 'P2', 5000, 10000, 0)
     ]
 
     results = sorted([
@@ -223,14 +220,13 @@ def test_import_party_results_missing_headers(session):
                     'total_votes',
                     'id',
                     'name',
-                    'mandates',
                     'votes',
                 )),
             ))
         ).encode('utf-8')), 'text/plain'
     )
     assert [(e.filename, e.error.interpolate()) for e in errors] == [
-        (None, "Missing columns: 'color'")
+        (None, "Missing columns: 'mandates'")
     ]
 
 
@@ -255,7 +251,6 @@ def test_import_party_results_invalid_values(session):
                     'total_votes',
                     'id',
                     'name',
-                    'color',
                     'mandates',
                     'votes',
                     'panachage_votes_from_1'
@@ -268,7 +263,6 @@ def test_import_party_results_invalid_values(session):
                     'xxx',
                     'xxx',
                     'xxx',
-                    'xxx',
                 )),
                 ','.join((
                     '',
@@ -278,24 +272,12 @@ def test_import_party_results_invalid_values(session):
                     '',
                     '',
                     '',
-                    '',
-                )),
-                ','.join((
-                    '2015',
-                    '5000',
-                    '1',
-                    'FDP',
-                    'blue',
-                    '1',
-                    '10',
-                    '10',
                 )),
                 ','.join((
                     '2015',
                     '5000',
                     '1',
                     'FDP',
-                    '#123456',
                     '1',
                     '10',
                     '10',
@@ -305,7 +287,6 @@ def test_import_party_results_invalid_values(session):
                     '5000',
                     '1',
                     'FDP',
-                    '#123456',
                     '1',
                     '10',
                     '10',
@@ -315,7 +296,6 @@ def test_import_party_results_invalid_values(session):
                     '5000',
                     '2',
                     'CVP',
-                    '#123456',
                     '1',
                     '10',
                     'xxx',
@@ -329,7 +309,6 @@ def test_import_party_results_invalid_values(session):
         (2, 'Invalid integer: year'),
         (2, 'Not an alphanumeric: id'),
         (3, 'Invalid values'),
-        (4, 'Invalid values'),
-        (6, 'FDP/2015 was found twice'),
-        (7, 'Invalid integer: panachage_votes_from_1')
+        (5, 'FDP/2015 was found twice'),
+        (6, 'Invalid integer: panachage_votes_from_1')
     ]

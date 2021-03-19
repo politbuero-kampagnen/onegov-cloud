@@ -27,11 +27,14 @@ def get_party_results(item):
     totals = dict(query)
     years = sorted((str(key) for key in totals.keys()))
 
+    colors = item.colors
+    default_color = '#999' if item.colors else ''
+
     parties = {}
     for result in item.party_results:
         party = parties.setdefault(result.name, {})
         year = party.setdefault(str(result.year), {})
-        year['color'] = result.color
+        year['color'] = colors.get(result.name) or default_color
         year['mandates'] = result.number_of_mandates
         year['votes'] = {
             'total': result.votes,
@@ -107,7 +110,7 @@ def get_party_results_data(item):
             front = parties[party].get(year, {}).get('mandates', 0)
             back = parties[party].get(year, {}).get('votes', {})
             back = back.get('permille', 0) / 10.0
-            color = parties[party].get(year, {}).get('color', '#999999')
+            color = parties[party].get(year, {}).get('color', '#999')
             results.append({
                 'group': party,
                 'item': year,
@@ -161,7 +164,8 @@ def get_parties_panachage_data(item, request=None):
     def right_node(party):
         return parties.index(party) + len(parties)
 
-    colors = dict(set((r.name, r.color) for r in party_results))
+    colors = item.colors
+
     intra_party_votes = dict(set((r.name, r.votes) for r in party_results))
 
     # Create the links

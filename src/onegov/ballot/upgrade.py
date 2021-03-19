@@ -541,3 +541,5 @@ def add_after_pukelsheim(context):
                 nullable=False,
                 default=False
             ), default=lambda x: False)
+
+# todo: drop party_results.color, move to meta property

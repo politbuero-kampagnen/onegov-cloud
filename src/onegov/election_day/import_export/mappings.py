@@ -52,7 +52,6 @@ ELECTION_PARTY_HEADERS = (
     'total_votes',
     'name',
     'id',
-    'color',
     'mandates',
     'votes',
 )

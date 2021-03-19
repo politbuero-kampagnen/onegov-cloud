@@ -65,7 +65,11 @@ def test_view_election_compound_party_strengths(election_day_app_gr):
     client.get('/locale/de_CH').follow()
 
     login(client)
-    create_election_compound(client)
+    create_election_compound(client, colors=(
+        'BDP #efb52c\n'
+        'CVP #ff6300\n'
+        'FDP #4068c8\n'
+    ))
     upload_party_results(client, slug='elections/elections')
 
     main = client.get('/elections/elections/party-strengths')
@@ -85,20 +89,20 @@ def test_view_election_compound_party_strengths(election_day_app_gr):
 
     export = client.get('/elections/elections/data-parties').text
     lines = export.split('\r\n')
-    assert lines[0].startswith('year,name,id,total_votes,color,mandates,votes')
-    assert lines[1].startswith('2015,BDP,0,11270,#efb52c,1,60387')
-    assert lines[2].startswith('2015,CVP,1,11270,#ff6300,1,49117')
-    assert lines[3].startswith('2015,FDP,2,11270,#0571b0,0,35134')
+    assert lines[0].startswith('year,name,id,total_votes,mandates,votes')
+    assert lines[1].startswith('2015,BDP,0,11270,1,60387')
+    assert lines[2].startswith('2015,CVP,1,11270,1,49117')
+    assert lines[3].startswith('2015,FDP,2,11270,0,35134')
 
     # Historical data
     csv_parties = (
-        'year,name,id,total_votes,color,mandates,votes\r\n'
-        '2015,BDP,0,60000,#efb52c,1,10000\r\n'
-        '2015,CVP,1,60000,#ff6300,1,30000\r\n'
-        '2015,FDP,2,60000,#4068c8,0,20000\r\n'
-        '2011,BDP,0,40000,#efb52c,1,1000\r\n'
-        '2011,CVP,1,40000,#ff6300,1,15000\r\n'
-        '2011,FDP,2,40000,#4068c8,1,10000\r\n'
+        'year,name,id,total_votes,mandates,votes\r\n'
+        '2015,BDP,0,60000,1,10000\r\n'
+        '2015,CVP,1,60000,1,30000\r\n'
+        '2015,FDP,2,60000,0,20000\r\n'
+        '2011,BDP,0,40000,1,1000\r\n'
+        '2011,CVP,1,40000,1,15000\r\n'
+        '2011,FDP,2,40000,1,10000\r\n'
     ).encode('utf-8')
 
     upload = client.get('/elections/elections/upload-party-results')
@@ -180,13 +184,13 @@ def test_view_election_compound_mandate_allocation(election_day_app_gr):
 
     # Historical data
     csv_parties = (
-        'year,name,id,total_votes,color,mandates,votes\r\n'
-        '2015,BDP,0,60000,#efb52c,1,10000\r\n'
-        '2015,CVP,1,60000,#ff6300,1,30000\r\n'
-        '2015,FDP,2,60000,#4068c8,0,20000\r\n'
-        '2011,BDP,0,40000,#efb52c,1,1000\r\n'
-        '2011,CVP,1,40000,#ff6300,1,15000\r\n'
-        '2011,FDP,2,40000,#4068c8,1,10000\r\n'
+        'year,name,id,total_votes,mandates,votes\r\n'
+        '2015,BDP,0,60000,1,10000\r\n'
+        '2015,CVP,1,60000,1,30000\r\n'
+        '2015,FDP,2,60000,0,20000\r\n'
+        '2011,BDP,0,40000,1,1000\r\n'
+        '2011,CVP,1,40000,1,15000\r\n'
+        '2011,FDP,2,40000,1,10000\r\n'
     ).encode('utf-8')
 
     upload = client.get('/elections/elections/upload-party-results')
@@ -213,7 +217,11 @@ def test_view_election_compound_parties_panachage(election_day_app_gr):
     client.get('/locale/de_CH').follow()
 
     login(client)
-    create_election_compound(client)
+    create_election_compound(client, colors=(
+        'BDP #efb52c\n'
+        'CVP #ff6300\n'
+        'FDP #4068c8\n'
+    ))
     upload_party_results(client, slug='elections/elections')
 
     main = client.get('/elections/elections/parties-panachage')

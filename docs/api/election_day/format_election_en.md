@@ -238,7 +238,6 @@ Name|Description
 `total_votes`|The total votes of the election.
 `name`|The name of the party.
 `id`|ID of the party (any number).
-`color`|The color of the party.
 `mandates`|The number of mandates.
 `votes`|The number of votes.
 

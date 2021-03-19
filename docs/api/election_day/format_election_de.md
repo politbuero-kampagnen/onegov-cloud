@@ -76,7 +76,7 @@ Name|Beschreibung
 `list_id`|ID der Liste des Kandidierenden. Nur bei Proporzwahlen. Kann alphanumerisch oder numerisch sein.
 `list_number_of_mandates`|Gesamte Anzahl der Mandate der Liste. Nur bei Proporzwahlen.
 `list_votes`|Anzahl der Listenstimmen pro Gemeinde. Nur bei Proporzwahlen.
-`list_connection`|ID der Listenverbindung oder Unterlistenverbindung (wenn list_connetion_parent vorhanden). Nur bei Proporzwahlen. 
+`list_connection`|ID der Listenverbindung oder Unterlistenverbindung (wenn list_connetion_parent vorhanden). Nur bei Proporzwahlen.
 `list_connection_parent`|ID der übergeordneten Listenverbidnung. Nur bei Proporzwahlen. Muss leer sein, wenn keine Unterlistenverbindung vorhanden.
 `candidate_id`|ID des Kandidierenden.
 `candidate_family_name`|Nachname des Kandidierenden.
@@ -233,7 +233,6 @@ Name|Beschreibung
 `total_votes`|Die Gesamtanzahl der Stimmen der Wahl.
 `name`|Der Name der Partei.
 `id`|ID der Partei (beliebige Zahl).
-`color`|Die Farbe der Partei.
 `mandates`|Die Anzahl Mandate der Partei.
 `votes`|Die Anzahl Stimmen der Partei.
 
@@ -253,14 +252,14 @@ Panaschierdaten werden nur hinzugefügt, falls:
 
 ### Automatische Erstellung verbundene Wahl und Wahlen mit REST-API
 
-Mit der WabstiC Export Version 2.4.3 können verbundene Wahlen mithilfe der Datei `WP_Wahl.csv` erstellt werden. 
+Mit der WabstiC Export Version 2.4.3 können verbundene Wahlen mithilfe der Datei `WP_Wahl.csv` erstellt werden.
 Das Token wird unter **WabstiDatenquellen** erzeugt.
 
     curl https://[base_url]/create-wabsti-proporz \
       --user :[token] \
       --header "Accept-Language: de_CH" \
       --form "wp_wahl=@WP_Wahl.csv"
-      
+
 Dieser Endpunkt erstellt dann folgendes:
 
 1. Alle Wahlen, die in `WP_Wahl.csv` vorhanden sind.

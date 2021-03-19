@@ -235,7 +235,6 @@ Nome|Descrizione
 `total_votes`|Il totale dei voti dell’elezione.
 `name`|Il nome del partito.
 `id`|ID del partito (qualsiasi numero).
-`color`|Il colore del partito.
 `mandates`|Il numero di mandati.
 `votes`|Il numero di voti.
 

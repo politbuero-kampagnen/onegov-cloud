@@ -318,7 +318,6 @@ def test_election_compound(session):
         votes=0,
         total_votes=100,
         name='Libertarian',
-        color='black'
     )
     session.add(party_result)
     session.flush()
@@ -407,7 +406,6 @@ def test_election_compound_changes(session):
                 votes=0,
                 total_votes=100,
                 name='Libertarian',
-                color='black'
             )
         )
         session.flush()
@@ -724,7 +722,6 @@ def test_election_compound_export_parties(session):
             votes=0,
             total_votes=100,
             name='Libertarian',
-            color='black',
             year=2012
         )
     )
@@ -734,7 +731,6 @@ def test_election_compound_export_parties(session):
             votes=2,
             total_votes=50,
             name='Libertarian',
-            color='black',
             year=2016
         )
     )
@@ -744,7 +740,6 @@ def test_election_compound_export_parties(session):
             votes=1,
             total_votes=100,
             name='Conservative',
-            color='red',
             year=2012
         )
     )
@@ -754,7 +749,6 @@ def test_election_compound_export_parties(session):
             votes=3,
             total_votes=50,
             name='Conservative',
-            color='red',
             year=2016
         )
     )
@@ -764,7 +758,6 @@ def test_election_compound_export_parties(session):
             'year': 2016,
             'name': 'Conservative',
             'id': 0,
-            'color': 'red',
             'mandates': 3,
             'total_votes': 50,
             'votes': 3,
@@ -775,7 +768,6 @@ def test_election_compound_export_parties(session):
             'year': 2016,
             'name': 'Libertarian',
             'id': 1,
-            'color': 'black',
             'mandates': 2,
             'total_votes': 50,
             'votes': 2,
@@ -786,7 +778,6 @@ def test_election_compound_export_parties(session):
             'year': 2012,
             'name': 'Conservative',
             'id': 0,
-            'color': 'red',
             'mandates': 1,
             'total_votes': 100,
             'votes': 1,
@@ -797,7 +788,6 @@ def test_election_compound_export_parties(session):
             'year': 2012,
             'name': 'Libertarian',
             'id': 1,
-            'color': 'black',
             'mandates': 0,
             'total_votes': 100,
             'votes': 0,
@@ -828,7 +818,6 @@ def test_election_compound_export_parties(session):
             'year': 2016,
             'name': 'Conservative',
             'id': 0,
-            'color': 'red',
             'mandates': 3,
             'total_votes': 50,
             'votes': 3,
@@ -840,7 +829,6 @@ def test_election_compound_export_parties(session):
             'year': 2016,
             'name': 'Libertarian',
             'id': 1,
-            'color': 'black',
             'mandates': 2,
             'total_votes': 50,
             'votes': 2,
@@ -849,7 +837,6 @@ def test_election_compound_export_parties(session):
             'panachage_votes_from_2': '',
             'panachage_votes_from_999': '',
         }, {
-            'color': '',
             'mandates': '',
             'name': 'Other',
             'id': 2,
@@ -864,7 +851,6 @@ def test_election_compound_export_parties(session):
             'year': 2012,
             'name': 'Conservative',
             'id': 0,
-            'color': 'red',
             'mandates': 1,
             'total_votes': 100,
             'votes': 1,
@@ -876,7 +862,6 @@ def test_election_compound_export_parties(session):
             'year': 2012,
             'name': 'Libertarian',
             'id': 1,
-            'color': 'black',
             'mandates': 0,
             'total_votes': 100,
             'votes': 0,
@@ -885,7 +870,6 @@ def test_election_compound_export_parties(session):
             'panachage_votes_from_2': '',
             'panachage_votes_from_999': '',
         }, {
-            'color': '',
             'mandates': '',
             'name': 'Other',
             'id': 2,

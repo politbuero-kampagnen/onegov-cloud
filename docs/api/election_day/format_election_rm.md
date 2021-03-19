@@ -235,7 +235,6 @@ Num|Descripziun
 `total_votes`|Il dumber total da vuschs da l'elecziun.
 `name`|Il num da la partida.
 `id`|ID da la partida (cifra casuala).
-`color`|La colur da la partida.
 `mandates`|Il dumber da sezs da la partida.
 `votes`|Il dumber da vuschs da la partida.
 

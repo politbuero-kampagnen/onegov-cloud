@@ -63,7 +63,6 @@ class PartyResultExportMixin(object):
             year = results.setdefault(result.year, {})
             year[result.name] = {
                 'total_votes': result.total_votes,
-                'color': result.color,
                 'mandates': result.number_of_mandates,
                 'votes': result.votes
             }
@@ -89,7 +88,6 @@ class PartyResultExportMixin(object):
                 row['name'] = party
                 row['id'] = parties.index(party)
                 row['total_votes'] = result.get('total_votes', '')
-                row['color'] = result.get('color', '')
                 row['mandates'] = result.get('mandates', '')
                 row['votes'] = result.get('votes', '')
 

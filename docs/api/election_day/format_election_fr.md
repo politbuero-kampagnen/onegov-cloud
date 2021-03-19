@@ -235,7 +235,6 @@ Nom|Description
 `total_votes`|Le total des votes de l'élection.
 `name`|La dénomination du parti.
 `id`|Identifiant du parti (n'importe quel numéro).
-`color`|La couleur du parti.
 `mandates`|Le nombre de mandats.
 `votes`|Le nombre de votes.
 
@@ -255,14 +254,14 @@ Les résultats avec panachage sont uniquement ajoutés si :
 
 ### Création automatique des composantes des élections
 
-Avec WabstiC Export version 2.4.3, les composantes des élections peuvent être créées en utilisant le fichier 'WP_Wahl.csv'. 
+Avec WabstiC Export version 2.4.3, les composantes des élections peuvent être créées en utilisant le fichier 'WP_Wahl.csv'.
 Le token est créé sous **Source de données Wabsti**.
 
     curl https://[base_url]/create-wabsti-proporz \
       --user :[token] \
       --header "Accept-Language: de_CH" \
       --form "wp_wahl=@WP_Wahl.csv"
-      
+
 La demande précedant effectue ensuite les étapes suivantes:
 
 1. Tous les élections présent dans le fichier `WP_Wahl.csv`.
