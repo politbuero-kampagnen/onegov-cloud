@@ -199,3 +199,78 @@ def delete_votes(self, request, form):
         'button_class': 'alert',
         'cancel': request.link(self)
     }
+
+
+@SwissvotesApp.view(
+    model=SwissVoteCollection,
+    permission=Public,
+    name='timeline'
+)
+def view_timeline(self, request):
+
+    def calculate_points_in_time(vote):
+        result = {
+            's': None,  # Sammelbeginn
+            'e': None,  # Einreichung
+            'b': None,  # Bundesrätliche Botschaft
+            'p': None,  # Parlamentsbeschluss
+            'f': None,  # Zustandekommen Fakultatives Referendum
+        }
+
+        # Einreichung
+        if vote.duration_initative_total is not None:
+            result['e'] = vote.duration_initative_total
+
+        # Sammelbeginn
+        if vote.duration_initative_collection is not None:
+            assert result['e'] is not None
+            result['s'] = result['e'] + vote.duration_initative_collection
+        # Bundesrätlichee Botschaft
+        if (
+            vote.duration_post_federal_assembly is not None
+            and vote.duration_federal_assembly is not None
+        ):
+            result['b'] = (
+                vote.duration_post_federal_assembly
+                + vote.duration_federal_assembly
+            )
+        if vote.duration_referendum_total is not None:
+            if result['b'] and result['b'] != vote.duration_referendum_total:
+                print('Warning: Inconsistent values')
+            result['b'] = vote.duration_referendum_total
+
+        if vote.duration_initative_federal_council is not None:
+            value = result['e'] - vote.duration_initative_federal_council
+            if result['b'] and result['b'] != value:
+                print('Warning: Inconsistent values')
+            result['b'] = value
+
+        # Parlamentsbeschluss
+        if vote.duration_post_federal_assembly is not None:
+            result['p'] = vote.duration_post_federal_assembly
+
+        # Zustandekommen Fakultatives Referendum
+        if vote.duration_referendum_collection is not None:
+            assert result['p'] is not None
+            result['f'] = result['p'] - vote.duration_referendum_collection
+
+        return result
+
+    result = []
+    for vote in self.query():
+        times = calculate_points_in_time(vote)
+        scale = 10
+        length = max((value or 0 for value in times.values())) // scale + 1
+        line = length * ['.']
+        for key, value in times.items():
+            if value:
+                line[value // scale] = key.upper()
+        result.append(''.join(reversed(line)) + f' {vote.date}')
+
+    # align right
+    length = max((len(line) for line in result))
+    result = [line.rjust(length, ' ') for line in result]
+    return Response(
+        '\n'.join(result),
+        content_type='text/plain',
+    )
