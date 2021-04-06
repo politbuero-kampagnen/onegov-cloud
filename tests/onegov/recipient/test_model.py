@@ -3,6 +3,14 @@ from onegov.recipient.model import GenericRecipient
 
 
 def test_recipient_model_order(session):
+
+    session.add(GenericRecipient(
+        name="Peter's Url",
+        medium="http",
+        address="http://example.org/push",
+        extra="POST"
+    ))
+
     session.add(GenericRecipient(
         name="Peter's Cellphone",
         medium="phone",
@@ -13,13 +21,6 @@ def test_recipient_model_order(session):
         name="Peter's E-Mail",
         medium="email",
         address="peter@example.org"
-    ))
-
-    session.add(GenericRecipient(
-        name="Peter's Url",
-        medium="http",
-        address="http://example.org/push",
-        extra="POST"
     ))
 
     session.flush()
