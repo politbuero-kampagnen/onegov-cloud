@@ -1006,13 +1006,25 @@ def test_booking_collection(session, owner):
         gender='male'
     )
 
+    sophia = attendees.add(
+        user=owner,
+        name="Sophia Henderson",
+        birth_date=date(2002, 9, 8),
+        gender='female'
+    )
+
+    # Again important to add first what you expect ordered as second item
+    bookings.add(owner, sophia, tournament, priority=2)
     bookings.add(owner, dustin, tournament)
 
-    assert bookings.query().count() == 1
+    all_bookings = bookings.query().all()
+    assert len(all_bookings) == 2
+    assert all_bookings == sorted(all_bookings, key=lambda b: b.priority)
+
     assert bookings.for_period(Bunch(id=uuid4())).query().count() == 0
     assert bookings.for_username('foobar').query().count() == 0
     assert bookings.for_period(Bunch(id=uuid4())).count(owner.username) == 0
-    assert bookings.booking_count(owner.username) == 1
+    assert bookings.booking_count(owner.username) == 2
 
 
 def test_star_nobble_booking(session, owner):
