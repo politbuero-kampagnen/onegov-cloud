@@ -25,7 +25,8 @@ def test_recipient_model_order(session):
 
     session.flush()
 
-    email, phone, url = session.query(GenericRecipient).all()
+    email, phone, url = session.query(GenericRecipient).order_by(
+        GenericRecipient.order).all()
     assert email.order == 'peter-s-cellphone'
     assert phone.order == 'peter-s-e-mail'
     assert url.order == 'peter-s-url'
@@ -45,6 +46,14 @@ def test_recipient_collection(session):
         medium="phone",
         address="+12 345 67 89"
     )
+    bar_recipients.add(
+        name="Forbidden recipient",
+        medium="phone",
+        address="+12 345 67 89"
+    )
+    # test sorting
+    all_bar = bar_recipients.query().all()
+    assert all_bar == sorted(all_bar, key=lambda en: en.order)
 
     foo_recipients = GenericRecipientCollection(session, type='foo')
     foo = foo_recipients.add(
@@ -54,7 +63,7 @@ def test_recipient_collection(session):
     )
 
     assert foo_recipients.query().count() == 1
-    assert bar_recipients.query().count() == 1
+    assert bar_recipients.query().count() == 2
 
     for obj in (foo, foo_recipients.query().first()):
         assert obj.type == 'foo'
