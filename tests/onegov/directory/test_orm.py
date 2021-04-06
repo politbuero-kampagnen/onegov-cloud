@@ -13,8 +13,25 @@ from onegov.file import File
 
 
 def test_directory_title_and_order(session):
-    doctors = DirectoryCollection(session).add(
+    collection = DirectoryCollection(session)
+    doctors = collection.add(
         title='Doctors',
+        structure="""
+            Name = ___
+        """,
+        configuration=DirectoryConfiguration()
+    )
+
+    patients = collection.add(
+        title='Patients',
+        structure="""
+            Name = ___
+        """,
+        configuration=DirectoryConfiguration()
+    )
+
+    staff = collection.add(
+        title='Staff',
         structure="""
             Name = ___
         """,
@@ -29,6 +46,8 @@ def test_directory_title_and_order(session):
 
     assert doctors.name == 'doctors'
     assert doctors.order == 'general-practicioners'
+
+    assert collection.query().all() == [doctors, patients, staff]
 
 
 def test_directory_fields(session):
