@@ -85,6 +85,7 @@ class ProporzElection(Election, PartyResultExportMixin):
         ),
         cascade='all, delete-orphan',
         lazy='dynamic',
+        overlaps='party_results'
     )
 
     #: An election may contains n (party) panachage results
@@ -95,6 +96,7 @@ class ProporzElection(Election, PartyResultExportMixin):
         ),
         cascade='all, delete-orphan',
         lazy='dynamic',
+        overlaps='panachage_results'
     )
 
     @property
@@ -202,13 +204,14 @@ class ProporzElection(Election, PartyResultExportMixin):
         pan = None
         ids = session.query(List.id)
         ids = ids.filter(List.election_id == self.id).all()
+        ids = [id_[0] for id_ in ids]
         if ids:
             lists = session.query(ListResult.last_change)
             lists = lists.order_by(desc(ListResult.last_change))
             lists = lists.filter(ListResult.list_id.in_(ids))
             lists = lists.first()[0] if lists.first() else None
 
-            ids = [str(id_[0]) for id_ in ids]
+            ids = [str(id_) for id_ in ids]
             pan = session.query(PanachageResult.last_change)
             pan = pan.order_by(desc(PanachageResult.last_change))
             pan = pan.filter(PanachageResult.target.in_(ids))

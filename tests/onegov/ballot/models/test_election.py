@@ -908,11 +908,22 @@ def test_election_rename(session):
     session.query(ElectionResult).one().election_id == 'elerction'
 
 
-def test_election_district():
-    election = Election()
+def test_election_district(session):
+    election = Election(
+        title='Election',
+        domain='canton',
+        date=date(2017, 1, 1),
+        status='interim',
+        absolute_majority=10000
+    )
+    session.add(election)
+    session.flush()
     assert election.district is None
 
-    election.results.append(ElectionResult(name='name'))
+    election.results.append(
+        ElectionResult(name='name', entity_id=1, counted=False)
+    )
+    session.flush()
     assert election.district == 'name'
 
     election.results.first().district = 'district'

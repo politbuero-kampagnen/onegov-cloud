@@ -116,6 +116,7 @@ class ElectionCompound(
         ),
         cascade='all, delete-orphan',
         lazy='dynamic',
+        overlaps='party_results'
     )
 
     #: An election compound may contains n panachage results
@@ -126,6 +127,7 @@ class ElectionCompound(
         ),
         cascade='all, delete-orphan',
         lazy='dynamic',
+        overlaps='panachage_results'
     )
 
     #: Defines optional colors for parties
@@ -270,6 +272,7 @@ class ElectionCompound(
         # Get the last candidate result change
         ids = session.query(Candidate.id)
         ids = ids.filter(Candidate.election_id.in_(election_ids)).all()
+        ids = [id_[0] for id_ in ids]
         result = session.query(CandidateResult.last_change)
         result = result.order_by(desc(CandidateResult.last_change))
         result = result.filter(CandidateResult.candidate_id.in_(ids))
@@ -278,6 +281,7 @@ class ElectionCompound(
         # Get the last list result changes
         ids = session.query(List.id)
         ids = ids.filter(List.election_id.in_(election_ids)).all()
+        ids = [id_[0] for id_ in ids]
         if ids:
             result = session.query(ListResult.last_change)
             result = result.order_by(desc(ListResult.last_change))
@@ -286,7 +290,7 @@ class ElectionCompound(
 
         # Get the last panachage result changes
         if ids:
-            ids = [str(id_[0]) for id_ in ids]
+            ids = [str(id_) for id_ in ids]
             result = session.query(PanachageResult.last_change)
             result = result.order_by(desc(PanachageResult.last_change))
             result = result.filter(

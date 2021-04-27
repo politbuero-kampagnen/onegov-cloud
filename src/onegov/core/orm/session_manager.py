@@ -626,7 +626,9 @@ class SessionManager(object):
                     base.metadata.schema = schema
                     base.metadata.create_all(conn)
 
-                    declared_classes.update(base._decl_class_registry.values())
+                    declared_classes.update(
+                        base.registry._class_registry.values()
+                    )
 
                 conn.execute('COMMIT')
             finally:

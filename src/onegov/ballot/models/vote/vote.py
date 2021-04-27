@@ -224,6 +224,7 @@ class Vote(Base, ContentMixin, TimestampMixin,
         session = object_session(self)
         ballot_ids = session.query(Ballot.id)
         ballot_ids = ballot_ids.filter(Ballot.vote_id == self.id).all()
+        ballot_ids = [id_[0] for id_ in ballot_ids]
         if not ballot_ids:
             return None
 

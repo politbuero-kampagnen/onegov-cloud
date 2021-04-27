@@ -231,6 +231,7 @@ class Election(Base, ContentMixin, TimestampMixin,
 
         ids = session.query(Candidate.id)
         ids = ids.filter(Candidate.election_id == self.id).all()
+        ids = [id_[0] for id_ in ids]
         if not ids:
             return results
 
