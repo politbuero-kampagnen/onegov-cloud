@@ -134,7 +134,7 @@ setup(
         'sedate',
         'sentry_sdk>=0.11.1',
         'sortedcontainers',
-        'sqlalchemy<1.4.0',
+        'sqlalchemy',
         'sqlalchemy-utils',
         'sqlparse',
         'stripe',
