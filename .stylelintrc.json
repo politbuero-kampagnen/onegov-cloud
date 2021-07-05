@@ -1,0 +1,18 @@
+{
+    "extends": "stylelint-config-sass-guidelines",
+    "ignoreFiles": [
+        "**/font-awesome/scss/*.scss",
+        "**/foundation/*/*.scss",
+        "**/foundation6/foundation/**/**/*.scss",
+        "**/font-*.scss",
+        "**/fonts/*.scss"
+    ],
+    "rules": {
+        "indentation": 4,
+        "number-leading-zero": null,
+        "max-nesting-depth": 10,
+        "selector-max-compound-selectors": 10,
+        "selector-max-id": 10,
+        "selector-no-vendor-prefix": false
+    }
+}

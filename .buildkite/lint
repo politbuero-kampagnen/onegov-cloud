@@ -10,6 +10,7 @@ node=$(nodeenv --list 2>&1 | tr '\t' '\n' | grep -E '^12' | tail -n 1)
 
 nodeenv --node="$node" /tmp/node
 /tmp/node/bin/npm install -g sass-lint
+/tmp/node/bin/npm install -g stylelint stylelint-config-sass-guidelines
 
 echo "--- Linting :python:"
 pip install flake8
@@ -17,3 +18,4 @@ flake8 src/
 
 echo "--- Linting :sasslang:"
 sass-lint -c .sass-lint.yml 'src/**/*.scss' -v -q
+stylelint --config .stylelintrc.json 'src/**/*.scss' -v -q
