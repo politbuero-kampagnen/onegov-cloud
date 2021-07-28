@@ -1,6 +1,7 @@
 from datetime import timedelta, datetime
 from io import BytesIO
 
+import pytest
 import transaction
 from purl import URL
 from pytz import UTC
@@ -634,7 +635,8 @@ def test_bug_semicolons_in_choices_with_filters(client):
     assert [t.text for t in tags] == [f'{test_label} (1)', 'B (0)', 'C (0)']
 
 
-def test_directory_export(client):
+@pytest.mark.parametrize('export_fmt', ['xlsx', 'csv', 'json'])
+def test_directory_export_import(client, temporary_directory, export_fmt):
     session = client.app.session()
     directories = DirectoryCollection(session, type='extended')
     dir_structure = """
@@ -646,7 +648,9 @@ def test_directory_export(client):
                     [ ] Z: with semicolon
                 Choice =
                     (x) yes
-                    ( ) no                
+                    ( ) no
+                Description *= ...
+                Lead *= ...
             """
 
     events = directories.add(
@@ -656,7 +660,11 @@ def test_directory_export(client):
         configuration=DirectoryConfiguration(
             title="[name]",
             order=['name'],
-            keywords=['Category', 'Choice']
+            keywords=['Category', 'Choice'],
+            display={
+                'content': ['Name', 'Lead', 'Description'],
+                'contact': []
+            },
         ),
         meta={
             'enable_map': False,
@@ -670,17 +678,24 @@ def test_directory_export(client):
         }
     )
 
+    multi_line = '"Tripping" the csv reader?\n  Jep.'
+
+    # "" trips the reader if not at the beginning of the string
     events.add(values=dict(
         name="Dance",
         contact_for_infos_='John',
         category=['A'],
-        choice='yes'
+        choice='yes',
+        description=multi_line,
+        lead=':,D//-'
     ))
     events.add(values=dict(
         name="Zumba",
         contact_for_infos_='Helen',
         category=['Z: with semicolon', 'B'],
-        choice='no'
+        choice='no',
+        description='A, B, - ,:',
+        lead=':,Z//-'
     ))
     transaction.commit()
 
@@ -692,7 +707,7 @@ def test_directory_export(client):
         '.filter-panel a:first-of-type')[0].attrib['href']
 
     export_page = client.get(filtered_url)
-    export_page.form['file_format'] = 'csv'
+    export_page.form['file_format'] = export_fmt
     export_view = export_page.form.submit()
     export_view_url = export_view.headers['location']
     assert URL(export_page.request.url).query_param('keywords') == \
@@ -709,7 +724,31 @@ def test_directory_export(client):
         count += 1
 
     # create a directory in memory
-    directory = archive.read(after_import=count_entry)
+    if export_fmt == 'csv':
+        with pytest.raises(IndexError):
+            # The CSV Dict Reader mis-interprets a cell value when a quote
+            # and newlines are present resulting in a wrong wrong that can't
+            # be matched with the headers
+            archive.read(after_import=count_entry)
+        return
+    else:
+        directory = archive.read(after_import=count_entry)
+
     assert directory != events
     assert count == 1
     assert directory.meta == events.meta
+
+    # Re-Upload
+    client.login_admin()
+    import_page = client.get('/directories/events/+import')
+    import_page.form['import_config'] = 'yes'
+    import_page.form['mode'] = 'replace'
+    import_page.form['zip_file'] = Upload(
+        'data.zip', BytesIO(resp.body).read(),
+        content_type='application/octet-stream'
+    )
+    page = import_page.form.submit().follow()
+    assert '1 Einträge importiert' in page
+
+    entry = session.query(DirectoryEntry).first()
+    assert entry.values['description'] == multi_line
