@@ -88,7 +88,7 @@ class CSVFile(object):
 
     def __init__(self, csvfile, expected_headers=None, dialect=None,
                  encoding=None, rename_duplicate_column_names=False,
-                 rowtype=None):
+                 rowtype=None, quoting=None):
 
         # guess the encoding if not already provided
         encoding = encoding or detect_encoding(csvfile)
@@ -96,6 +96,7 @@ class CSVFile(object):
             raise errors.InvalidFormatError()
 
         self.csvfile = codecs.getreader(encoding)(csvfile)
+        self.quoting = quoting
 
         # sniff the dialect if not already provided
         try:
@@ -153,7 +154,12 @@ class CSVFile(object):
 
         encountered_empty_line = False
 
-        for ix, line in enumerate(csv_reader(self.csvfile, self.dialect)):
+        kwargs = {}
+        if self.quoting:
+            kwargs['quoting'] = self.quoting
+
+        for ix, line in enumerate(
+                csv_reader(self.csvfile, self.dialect, **kwargs)):
 
             # raise an empty line error if we found one somewhere in the
             # middle -> at the end they don't count
@@ -400,7 +406,8 @@ def get_keys_from_list_of_dicts(rows, key=None, reverse=False):
     return fields
 
 
-def convert_list_of_dicts_to_csv(rows, fields=None, key=None, reverse=False):
+def convert_list_of_dicts_to_csv(
+        rows, fields=None, key=None, reverse=False, quoting=None):
     """ Takes a list of dictionaries and returns a csv.
 
     If no fields are provided, all fields are included in the order of the keys
@@ -414,6 +421,7 @@ def convert_list_of_dicts_to_csv(rows, fields=None, key=None, reverse=False):
     The function returns a string created in memory. Therefore this function
     is limited to small-ish datasets.
 
+    Quoting: Use e.g. csv.QUOTE_NONNUMERIC
     """
 
     if not rows:
@@ -422,7 +430,11 @@ def convert_list_of_dicts_to_csv(rows, fields=None, key=None, reverse=False):
     fields = fields or get_keys_from_list_of_dicts(rows, key, reverse)
 
     output = StringIO()
-    writer = DictWriter(output, fieldnames=fields)
+    kwargs = {}
+    if quoting:
+        kwargs['quoting'] = quoting
+
+    writer = DictWriter(output, fieldnames=fields, **kwargs)
 
     writer.writeheader()
 
