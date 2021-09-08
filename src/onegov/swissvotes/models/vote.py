@@ -1010,6 +1010,9 @@ class SwissVote(Base, TimestampMixin, LocalizedFiles, ContentMixin):
     # searchable attachment texts
     # we don't include the voting booklet, resolution and ad analysis as
     # they might contain other votes from the same day!
+    searchable_text_de_CH = deferred(Column(TSVECTOR))
+    searchable_text_fr_CH = deferred(Column(TSVECTOR))
+
     text_voting_text_de_CH = deferred(Column(TSVECTOR))
     text_voting_text_fr_CH = deferred(Column(TSVECTOR))
     text_brief_description_de_CH = deferred(Column(TSVECTOR))
@@ -1041,6 +1044,7 @@ class SwissVote(Base, TimestampMixin, LocalizedFiles, ContentMixin):
         count = 0
         for locale, attributes in self.indexed_files.items():
             language = {'de_CH': 'german', 'fr_CH': 'french'}.get(locale)
+            searchable_text = ''
             for attribute in attributes:
                 file = SwissVote.__dict__[attribute].__get_by_locale__(
                     self, locale
@@ -1054,6 +1058,12 @@ class SwissVote(Base, TimestampMixin, LocalizedFiles, ContentMixin):
                     f'text_{attribute}_{locale}',
                     func.to_tsvector(language, text)
                 )
+                searchable_text = f'{searchable_text} {text}'
+            setattr(
+                self,
+                f'searchable_text_{locale}',
+                func.to_tsvector(language, searchable_text)
+            )
         return count
 
     @observes('files')
