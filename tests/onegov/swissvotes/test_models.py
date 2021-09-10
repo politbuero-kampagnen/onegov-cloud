@@ -1001,6 +1001,8 @@ def test_model_vote_attachments(swissvotes_app, attachments,
     assert vote.voting_booklet is None
     assert vote.voting_text is None
     assert vote.files == []
+    assert vote.searchable_text_de_CH is None
+    assert vote.searchable_text_fr_CH is None
     assert vote.text_voting_text_de_CH is None
     assert vote.text_voting_text_fr_CH is None
     assert vote.text_brief_description_de_CH is None
@@ -1065,6 +1067,10 @@ def test_model_vote_attachments(swissvotes_app, attachments,
     assert vote.brief_description.name == 'brief_description-de_CH'
     assert vote.parliamentary_debate.name == 'parliamentary_debate-de_CH'
     assert vote.voting_text.name == 'voting_text-de_CH'
+    assert "abstimmungstex" in vote.searchable_text_de_CH
+    assert "kurschbeschreib" in vote.searchable_text_de_CH
+    assert "parlamentdebatt" in vote.searchable_text_de_CH
+    assert vote.searchable_text_fr_CH == ''
     assert "abstimmungstex" in vote.text_voting_text_de_CH
     assert "kurschbeschreib" in vote.text_brief_description_de_CH
     assert "parlamentdebatt" in vote.text_parliamentary_debate_de_CH
@@ -1078,6 +1084,10 @@ def test_model_vote_attachments(swissvotes_app, attachments,
     assert len(vote.files) == 5
     assert vote.voting_text is None
     assert vote.realization.name == 'realization-fr_CH'
+    assert "abstimmungstex" in vote.searchable_text_de_CH
+    assert "kurschbeschreib" in vote.searchable_text_de_CH
+    assert "parlamentdebatt" in vote.searchable_text_de_CH
+    assert "réalis" in vote.searchable_text_fr_CH
     assert "abstimmungstex" in vote.text_voting_text_de_CH
     assert "kurschbeschreib" in vote.text_brief_description_de_CH
     assert "parlamentdebatt" in vote.text_parliamentary_debate_de_CH
@@ -1094,6 +1104,12 @@ def test_model_vote_attachments(swissvotes_app, attachments,
     assert vote.federal_council_message.name == 'federal_council_message-fr_CH'
     assert vote.resolution.name == 'resolution-fr_CH'
     assert vote.voting_booklet.name == 'voting_booklet-fr_CH'
+    assert "abstimmungstex" in vote.searchable_text_de_CH
+    assert "kurschbeschreib" in vote.searchable_text_de_CH
+    assert "parlamentdebatt" in vote.searchable_text_de_CH
+    assert "réalis" not in vote.searchable_text_fr_CH
+    assert "conseil" in vote.searchable_text_fr_CH
+    assert "fédéral" in vote.searchable_text_fr_CH
     assert "abstimmungstex" in vote.text_voting_text_de_CH
     assert "kurschbeschreib" in vote.text_brief_description_de_CH
     assert "parlamentdebatt" in vote.text_parliamentary_debate_de_CH
