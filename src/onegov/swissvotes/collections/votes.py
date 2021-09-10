@@ -7,6 +7,7 @@ from onegov.core.collection import Pagination
 from onegov.swissvotes.models import ColumnMapper
 from onegov.swissvotes.models import PolicyArea
 from onegov.swissvotes.models import SwissVote
+from onegov.swissvotes.utils import search_term_expression
 from psycopg2.extras import NumericRange
 from sqlalchemy import func
 from sqlalchemy import or_
@@ -252,23 +253,6 @@ class SwissVoteCollection(Pagination):
             return self.page_by_index((self.page or 0) + 1)
 
     @property
-    def term_expression(self):
-        """ Returns the current search term transformed to use within
-        Postgres ``to_tsquery`` function.
-
-
-        Removes all unwanted characters, replaces prefix matching, joins
-        word together using FOLLOWED BY.
-        """
-
-        def cleanup(text):
-            result = ''.join((c for c in text if c.isalnum() or c in ',.'))
-            return f'{result}:*' if text.endswith('*') else result
-
-        parts = [cleanup(part) for part in (self.term or '').split()]
-        return ' <-> '.join([part for part in parts if part])
-
-    @property
     def term_filter_numeric(self):
         """ Returns a list of SqlAlchemy filter statements matching possible
         numeric attributes based on the term.
@@ -292,8 +276,8 @@ class SwissVoteCollection(Pagination):
         fulltext attributes based on the term.
 
         """
-        term = self.term_expression
 
+        term = search_term_expression(self.term)
         if not term:
             return []
 

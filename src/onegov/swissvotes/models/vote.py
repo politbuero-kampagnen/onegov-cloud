@@ -14,6 +14,7 @@ from onegov.swissvotes.models.file import LocalizedFile
 from onegov.swissvotes.models.file import LocalizedFiles
 from onegov.swissvotes.models.policy_area import PolicyArea
 from onegov.swissvotes.models.region import Region
+from onegov.swissvotes.utils import search_term_expression
 from sqlalchemy import Column
 from sqlalchemy import Date
 from sqlalchemy import func
@@ -24,6 +25,7 @@ from sqlalchemy_utils import observes
 from sqlalchemy.dialects.postgresql import INT4RANGE
 from sqlalchemy.dialects.postgresql import TSVECTOR
 from sqlalchemy.orm import deferred
+from sqlalchemy.orm import object_session
 from urllib.parse import urlparse
 from urllib.parse import urlunparse
 
@@ -1038,12 +1040,12 @@ class SwissVote(Base, TimestampMixin, LocalizedFiles, ContentMixin):
             for locale in ('de_CH', 'fr_CH')
         }
 
-    def reindex_filex(self):
+    def reindex_files(self):
         """ Extract the text from the indexed files and store it. """
 
         count = 0
         for locale, attributes in self.indexed_files.items():
-            language = {'de_CH': 'german', 'fr_CH': 'french'}.get(locale)
+            language = {'de_CH': 'german', 'fr_CH': 'french'}[locale]
             searchable_text = ''
             for attribute in attributes:
                 file = SwissVote.__dict__[attribute].__get_by_locale__(
@@ -1066,9 +1068,34 @@ class SwissVote(Base, TimestampMixin, LocalizedFiles, ContentMixin):
             )
         return count
 
+    def search_in_files(self, term, locales=None):
+        """ Searches for the given term in the indexed attachments.
+
+        Returns a tuple of attribute name and locale which can be used with
+        ``get_file``.
+        """
+        term = search_term_expression(term)
+        if not term:
+            return []
+
+        result = []
+        query = object_session(self).query(SwissVote.id)
+        query = query.filter(SwissVote.id == self.id)
+        for locale, attributes in self.indexed_files.items():
+            if locales and locale not in locales:
+                continue
+            for attribute in attributes:
+                column = SwissVote.__dict__[f'text_{attribute}_{locale}']
+                language = {'de_CH': 'german', 'fr_CH': 'french'}[locale]
+                match = column.op('@@')(func.to_tsquery(language, term))
+                if query.filter(match).first():
+                    result.append((attribute, locale))
+
+        return result
+
     @observes('files')
     def files_observer(self, files):
-        self.reindex_filex()
+        self.reindex_files()
 
     def get_file(self, name, locale=None, fallback=True):
         """ Returns the requested localized file.

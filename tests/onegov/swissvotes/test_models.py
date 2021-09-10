@@ -1074,6 +1074,9 @@ def test_model_vote_attachments(swissvotes_app, attachments,
     assert "abstimmungstex" in vote.text_voting_text_de_CH
     assert "kurschbeschreib" in vote.text_brief_description_de_CH
     assert "parlamentdebatt" in vote.text_parliamentary_debate_de_CH
+    assert vote.search_in_files('Abstimmungstext') == [
+        ('voting_text', 'de_CH')
+    ]
 
     # Upload fr_CH
     swissvotes_app.session_manager.current_locale = 'fr_CH'
@@ -1092,6 +1095,7 @@ def test_model_vote_attachments(swissvotes_app, attachments,
     assert "kurschbeschreib" in vote.text_brief_description_de_CH
     assert "parlamentdebatt" in vote.text_parliamentary_debate_de_CH
     assert "réalis" in vote.text_realization_fr_CH
+    assert vote.search_in_files('Réalisation') == [('realization', 'fr_CH')]
 
     del vote.realization
     vote.federal_council_message = attachments['federal_council_message']
