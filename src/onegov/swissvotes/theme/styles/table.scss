@@ -57,6 +57,12 @@ table {
         }
     }
 
+    tr {
+        &.highlighted {
+            background-color: #fff000;
+        }
+    }
+
 
     dl {
         font-size: .875rem;

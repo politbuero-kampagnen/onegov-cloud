@@ -57,12 +57,24 @@ class VoteLayout(DefaultLayout):
         ]
 
     @cached_property
+    def term(self):
+        return self.request.params.get('term', '').strip()
+
+    @cached_property
+    def search_results(self):
+        result = self.model.search_in_files(self.term) if self.term else []
+        return [r[0] for r in result]
+
+    @cached_property
     def attachments(self):
         """ Returns a dictionary with static URLS for attachments.
 
         Note that not ony file / locale combinations with a file_name
         definition have a static URL!
         """
+
+        # todo: add attachments of other locales, if found in search results?
+        # or should we show all attachments?
 
         result = {}
         for name, file in self.model.localized_files().items():

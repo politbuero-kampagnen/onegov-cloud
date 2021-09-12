@@ -12,6 +12,24 @@
                 </li>
             </ul>
 
+            <div class="row">
+                <div class="small-12 large-4 large-offset-8 columns">
+                    <form class="searchbox" action="" method="GET">
+                      <div class="row collapse">
+                          <div class="columns small-10">
+                              <label for="search" class="show-for-sr" i18n:translate>Full text search</label>
+                              <input id="search" type="text" name="term" placeholder="Full text search" i18n:attributes="placeholder" autocomplete="off" autocorrect="off" required maxlength="200" value="${layout.term}"/>
+                          </div>
+                          <div class="columns small-2">
+                              <button type="submit" class="button postfix" aria-label="Search" i18n:attributes="aria-label">
+                                <i class="fa fa-search"></i>
+                              </button>
+                          </div>
+                      </div>
+                    </form>
+                </div>
+            </div>
+
             <h2>${layout.title}<tal:block tal:condition="vote.keyword"> <small>${vote.keyword}</small></tal:block></h2>
 
             <div class="row">
@@ -55,7 +73,7 @@
                             </tal:block>
                         </td>
                     </tr>
-                    <tr tal:condition="layout.attachments['brief_description']">
+                    <tr tal:condition="layout.attachments['brief_description']" tal:attributes="class 'highlighted' if 'brief_description' in layout.search_results else ''">
                         <th class="column-30" i18n:translate>Brief description Swissvotes</th>
                         <td><a href="${layout.attachments['brief_description']}" target="_blank" class="brief-description">PDF</a>
                             <span tal:condition="request.html_lang == 'en-US'">(in German)</span>
@@ -68,7 +86,7 @@
                             <a href="${vote.anneepolitique}" target="_blank" i18n:translate>Link</a> <span tal:condition="request.html_lang == 'en-US'">(in German / French)</span>
                             </td>
                     </tr>
-                    <tr tal:condition="layout.attachments['voting_text']">
+                    <tr tal:condition="layout.attachments['voting_text']" tal:attributes="class 'highlighted' if 'voting_text' in layout.search_results else ''">
                         <th class="column-30" i18n:translate>Voting text</th>
                         <td><a href="${layout.attachments['voting_text']}" target="_blank" class="voting-text">
                         PDF</a> <span tal:condition="request.html_lang == 'en-US'">(in German)</span></td>
@@ -96,7 +114,7 @@
                         <th class="column-30" i18n:translate>Initiator</th>
                         <td>${vote.initiator}</td>
                     </tr>
-                    <tr tal:condition="layout.attachments['preliminary_examination']">
+                    <tr tal:condition="layout.attachments['preliminary_examination']" tal:attributes="class 'highlighted' if 'preliminary_examination' in layout.search_results else ''">
                         <th class="column-30" i18n:translate>Preliminary examination</th>
                         <td><a class="preliminary-examination" target="_blank" href="${layout.attachments['preliminary_examination']}">PDF</a> <span tal:condition="request.html_lang == 'en-US'">(in German)</span></td>
 
@@ -112,7 +130,7 @@
                         </th>
                         <td>${layout.format_number(vote.duration_initative_collection)} <tal:block i18n:translate>Days</tal:block></td>
                     </tr>
-                    <tr tal:condition="layout.attachments['realization']">
+                    <tr tal:condition="layout.attachments['realization']" tal:attributes="class 'highlighted' if 'realization' in layout.search_results else ''">
                         <th class="column-30" i18n:translate>Realization</th>
                         <td><a href="${layout.attachments['realization']}" target="_blank" class="realization">PDF</a></td>
                     </tr>
@@ -124,7 +142,7 @@
                     <tr><th colspan="2" i18n:translate>Pre-parliamentary phase</th></tr>
                 </thead>
                 <tbody>
-                    <tr tal:condition="layout.attachments['federal_council_message']">
+                    <tr tal:condition="layout.attachments['federal_council_message']" tal:attributes="class 'highlighted' if 'federal_council_message' in layout.search_results else ''">
                         <th class="column-30" i18n:translate>Federal council message</th>
                         <td><a href="${layout.attachments['federal_council_message']}" target="_blank" class="federal-council-message">
                         PDF</a> <span tal:condition="request.html_lang == 'en-US'">(in German)</span>
@@ -146,7 +164,7 @@
                         <th class="column-30" i18n:translate>Procedure number</th>
                         <td>${vote.procedure_number}</td>
                     </tr>
-                    <tr tal:condition="layout.attachments['parliamentary_debate'] or vote.curiavista">
+                    <tr tal:condition="layout.attachments['parliamentary_debate'] or vote.curiavista" tal:attributes="class 'highlighted' if 'parliamentary_debate' in layout.search_results else ''">
                         <th class="column-30" i18n:translate>Parliamentary debate</th>
                         <td>
                             <a href="${layout.attachments['parliamentary_debate']}" target="_blank" class="parliamentary-debate" tal:condition="layout.attachments['parliamentary_debate']">
@@ -229,7 +247,7 @@
                         </th>
                         <td>${layout.format_number(vote.duration_referendum_collection)} <tal:block i18n:translate>Days</tal:block></td>
                     </tr>
-                    <tr tal:condition="layout.attachments['realization']">
+                    <tr tal:condition="layout.attachments['realization']" tal:attributes="class 'highlighted' if 'realization' in layout.search_results else ''">
                         <th class="column-30" i18n:translate>Realization</th>
                         <td><a href="${layout.attachments['realization']}" target="_blank" class="realization">PDF</a></td>
                     </tr>
@@ -241,7 +259,7 @@
                     <tr><th colspan="2" i18n:translate>Voting campaign</th></tr>
                 </thead>
                 <tbody>
-                    <tr tal:condition="layout.attachments['voting_booklet']">
+                    <tr tal:condition="layout.attachments['voting_booklet']" tal:attributes="class 'highlighted' if 'voting_booklet' in layout.search_results else ''">
                         <th class="column-30" i18n:translate>Voting booklet</th>
                         <td>
                         <a href="${layout.attachments['voting_booklet']}" target="_blank" class="voting-booklet">PDF</a> <span tal:condition="request.html_lang == 'en-US'">(in German)</span>
@@ -316,7 +334,7 @@
                         </th>
                         <td>${layout.format_number(vote.media_ads_yea_p, 0)}%</td>
                     </tr>
-                    <tr tal:condition="layout.attachments['ad_analysis']">
+                    <tr tal:condition="layout.attachments['ad_analysis']" tal:attributes="class 'highlighted' if 'ad_analysis' in layout.search_results else ''">
                         <th class="column-30" i18n:translate>Analysis of the advertising campaign by Année Politique</th>
                         <td><a href="${layout.attachments['ad_analysis']}" target="_blank" class="ad-analysis">PDF</a>
                         <span tal:condition="request.html_lang == 'en-US'">(in German)</span><span tal:condition="request.html_lang == 'fr-CH'">(en allemand)</span>
@@ -339,7 +357,7 @@
                           <span i18n:translate tal:condition="vote.media_coverage_tonality_total < 0">(predominantly negative)</span>
                         </td>
                     </tr>
-                    <tr tal:condition="layout.attachments['foeg_analysis']">
+                    <tr tal:condition="layout.attachments['foeg_analysis']" tal:attributes="class 'highlighted' if 'foeg_analysis' in layout.search_results else ''">
                         <th class="column-30" i18n:translate>Media coverage: fög analysis</th>
                         <td>
                             <a href="${layout.attachments['foeg_analysis']}" target="_blank" class="foeg-analysis">PDF</a> /
@@ -414,13 +432,12 @@
                         <th class="column-30" i18n:translate>Turnout</th>
                         <td>${layout.format_number(vote.result_turnout, 2)}%</td>
                     </tr>
-                    <tr tal:condition="layout.attachments['resolution']">
+                    <tr tal:condition="layout.attachments['resolution']" tal:attributes="class 'highlighted' if 'resolution' in layout.search_results else ''">
                         <th class="column-30" i18n:translate>Resolution</th>
                         <td><a href="${layout.attachments['resolution']}" target="_blank" class="resolution">PDF</a> <span tal:condition="request.html_lang == 'en-US'">(in German)</span>
-
                         </td>
                     </tr>
-                    <tr tal:condition="layout.attachments['results_by_domain']">
+                    <tr tal:condition="layout.attachments['results_by_domain']" tal:attributes="class 'highlighted' if 'results_by_domain' in layout.search_results else ''">
                         <th class="column-30" i18n:translate>Result by canton, district and municipality</th>
                         <td><a href="${layout.attachments['results_by_domain']}" target="_blank" class="results-by-domain">
                             Excel
@@ -457,14 +474,14 @@
                     <tr><th colspan="2" i18n:translate>Post-vote poll</th></tr>
                 </thead>
                 <tbody>
-                    <tr tal:condition="layout.attachments['post_vote_poll']">
+                    <tr tal:condition="layout.attachments['post_vote_poll']" tal:attributes="class 'highlighted' if 'post_vote_poll' in layout.search_results else ''">
                         <th class="column-30" i18n:translate>Full analysis of post-vote poll results</th>
                         <td>
                             <a href="${layout.attachments['post_vote_poll']}" target="_blank" class="post-vote-poll">PDF</a>
                             <span tal:condition="request.html_lang == 'en-US'">(in German)</span>
                         </td>
                     </tr>
-                    <tr tal:condition="layout.attachments['post_vote_poll_report']">
+                    <tr tal:condition="layout.attachments['post_vote_poll_report']" tal:attributes="class 'highlighted' if 'post_vote_poll_report' in layout.search_results else ''">
                         <th class="column-30" i18n:translate>Technical report</th>
                         <td>
                             <a href="${layout.attachments['post_vote_poll_report']}" target="_blank" class="post-vote-poll-report">PDF</a>
@@ -476,7 +493,7 @@
                         <th class="column-30" i18n:translate>Cockpit with selected results</th>
                         <td><a href="${vote.post_vote_poll_link}" target="_blank" i18n:translate>Link</a></td>
                     </tr>
-                    <tr tal:condition="layout.attachments['post_vote_poll_methodology']">
+                    <tr tal:condition="layout.attachments['post_vote_poll_methodology']" tal:attributes="class 'highlighted' if 'post_vote_poll_methodology' in layout.search_results else ''">
                         <th class="column-30" i18n:translate>Questionnaire of the poll</th>
                         <td>
                             <a href="${layout.attachments['post_vote_poll_methodology']}" target="_blank" class="post-vote-poll-methodology">PDF</a>
@@ -485,7 +502,12 @@
                     </tr>
                     <tr tal:condition="layout.attachments['post_vote_poll_dataset'] or
                                        layout.attachments['post_vote_poll_dataset_sav'] or
-                                       layout.attachments['post_vote_poll_dataset_dta']">
+                                       layout.attachments['post_vote_poll_dataset_dta']"
+                        tal:attributes="class 'highlighted' if (
+                                    'post_vote_poll_dataset' in layout.search_results or
+                                    'post_vote_poll_dataset_sav' in layout.search_results or
+                                    'post_vote_poll_dataset_dta' in layout.search_results
+                                ) else ''">
                         <th class="column-30" i18n:translate>Dataset of the post-vote poll</th>
                         <td class="inline-links">
                             <a tal:condition="layout.attachments['post_vote_poll_dataset']" href="${layout.attachments['post_vote_poll_dataset']}" target="_blank" class="post-vote-poll-dataset">CSV</a>
@@ -494,7 +516,11 @@
                         </td>
                     </tr>
                     <tr tal:condition="layout.attachments['post_vote_poll_codebook'] or
-                                       layout.attachments['post_vote_poll_codebook_xlsx']">
+                                       layout.attachments['post_vote_poll_codebook_xlsx']"
+                        tal:attributes="class 'highlighted' if (
+                                    'post_vote_poll_codebook' in layout.search_results or
+                                    'post_vote_poll_codebook_xlsx' in layout.search_results
+                               ) else ''">
                         <th class="column-30" i18n:translate>Codebook for the post-vote poll</th>
                         <td class="inline-links">
                             <a tal:condition="layout.attachments['post_vote_poll_codebook']" href="${layout.attachments['post_vote_poll_codebook']}" target="_blank" class="post-vote-poll-codebook">PDF</a>

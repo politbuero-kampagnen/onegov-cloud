@@ -30,7 +30,9 @@ def view_votes(self, request, form):
 
     return {
         'layout': VotesLayout(self, request),
-        'form': form
+        'form': form,
+        'term': self.term,
+        'full_text': self.full_text
     }
 
 

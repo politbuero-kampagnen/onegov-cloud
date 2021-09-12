@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-09-06 10:07+0200\n"
+"POT-Creation-Date: 2021-09-12 09:32+0200\n"
 "PO-Revision-Date: 2021-01-07 09:13+0100\n"
 "Last-Translator: Marc Sommerhalder <marc.sommerhalder@seantis.ch>\n"
 "Language-Team: \n"
@@ -143,21 +143,6 @@ msgstr "Titre"
 msgid "Content"
 msgstr "Contenu"
 
-msgid "From date"
-msgstr "De"
-
-msgid "To date"
-msgstr "A"
-
-msgid "Legal form"
-msgstr "Type de processus"
-
-msgid "Voting result"
-msgstr "Résultat de la votation"
-
-msgid "Policy area"
-msgstr "Domaine politique"
-
 msgid "Text Search"
 msgstr "Texte"
 
@@ -177,6 +162,21 @@ msgstr ""
 "Recherche dans l'intégralité du texte, pièces jointes comprises. "
 "Sélectionnez \"non\" si vous souhaitez limiter la recherche au titre, mot-"
 "clé, numéro de vote et numéro de procédure."
+
+msgid "Policy area"
+msgstr "Domaine politique"
+
+msgid "Legal form"
+msgstr "Type de processus"
+
+msgid "Voting result"
+msgstr "Résultat de la votation"
+
+msgid "From date"
+msgstr "De"
+
+msgid "To date"
+msgstr "A"
 
 msgid "Position of the Federal Council"
 msgstr "Position du Conseil fédéral"
@@ -1600,6 +1600,9 @@ msgstr "Votation précédente"
 msgid "Next vote"
 msgstr "Votation suivante"
 
+msgid "Full text search"
+msgstr "Recherche en texte intégral"
+
 msgid "Official title"
 msgstr "Titre officiel"
 
@@ -1807,6 +1810,9 @@ msgstr "Pourcentage de \"oui\""
 #. Default: Turnout
 msgid "turnout_hyphenated"
 msgstr "Partici&shy;pation"
+
+msgid "Details (including full text search results in the attachments)"
+msgstr "Détails (y compris les résultats de la recherche en texte intégral dans les pièces jointes)"
 
 msgid "Wrong username or password"
 msgstr "Nom d'utilisateur ou mot de passe incorrect"

@@ -48,8 +48,19 @@ def view_vote(self, request):
         'prev': prev,
         'next': next,
         'map_preview': request.link(StaticFile('images/map-preview.png')),
-        'posters': self.posters(request)
+        'posters': self.posters(request),
     }
+
+
+@SwissvotesApp.html(
+    model=SwissVote,
+    permission=Private,
+    name='reindex'
+)
+def reindex_vote(self, request):
+    # todo: make me a form / POST and link me!
+    self.reindex_files()
+    return request.redirect(request.link(self))
 
 
 @SwissvotesApp.json(
