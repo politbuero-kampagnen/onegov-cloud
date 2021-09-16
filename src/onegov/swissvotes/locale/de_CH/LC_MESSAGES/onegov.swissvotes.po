@@ -1805,7 +1805,7 @@ msgstr "Ja-Anteil Volk"
 
 #. Default: Turnout
 msgid "turnout_hyphenated"
-msgstr "Stimmbe&shy;teiligung"
+msgstr "Stimm&shy;beteiligung"
 
 msgid "Details (including full text search results in the attachments)"
 msgstr "Details (einschliesslich Suchergebnisse in den Anhängen)"
