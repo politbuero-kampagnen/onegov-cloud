@@ -6,15 +6,30 @@ from onegov.quill.fields import QuillField
 def test_widget_initalization():
     input = QuillInput()
     assert input.formats == [
-        "'bold'", "'italic'", "'strike'", "'link'", "'header'", "'list'",
-        "'blockquote'", "'code-block'"
+        "'bold'",
+        "'italic'",
+        "'strike'",
+        "'link'",
+        "'header'",
+        "'list'",
+        "'blockquote'",
+        "'code-block'"
     ]
     assert input.toolbar == [
-        "'bold'", "'italic'", "'strike'", "'link'",
-        "{'header': 1}", "{'header': 2}", "{'header': 3}",
-        "{'header': 4}", "{'header': 5}", "{'header': 6}",
-        "{'list': 'ordered'}", "{'list': 'bullet'}",
-        "'blockquote'", "'code-block'"
+        "'bold'",
+        "'italic'",
+        "'strike'",
+        "'link'",
+        "{'header': 1}",
+        "{'header': 2}",
+        "{'header': 3}",
+        "{'header': 4}",
+        "{'header': 5}",
+        "{'header': 6}",
+        "{'list': 'ordered'}",
+        "{'list': 'bullet'}",
+        "'blockquote'",
+        "'code-block'"
     ]
 
     input = QuillInput(tags=['strong', 'ul'])
@@ -69,15 +84,30 @@ def test_widget_render():
     assert f'quill-container-{input.id}' in text
     assert f'quill-input-{input.id}' in text
     assert (
-        "['bold', 'italic', 'strike', 'link', 'header', 'list', "
-        "'blockquote', 'code-block']"
+        "'bold', "
+        "'italic', "
+        "'strike', "
+        "'link', "
+        "'header', "
+        "'list', "
+        "'blockquote', "
+        "'code-block'"
     ) in text
     assert (
-        "'bold', 'italic', 'strike', 'link', "
-        "{'header': 1}, {'header': 2}, {'header': 3}, "
-        "{'header': 4}, {'header': 5}, {'header': 6}, "
-        "{'list': 'ordered'}, {'list': 'bullet'}, "
-        "'blockquote', 'code-block'"
+        "'bold', "
+        "'italic', "
+        "'strike', "
+        "'link', "
+        "{'header': 1}, "
+        "{'header': 2}, "
+        "{'header': 3}, "
+        "{'header': 4}, "
+        "{'header': 5}, "
+        "{'header': 6}, "
+        "{'list': 'ordered'}, "
+        "{'list': 'bullet'}, "
+        "'blockquote', "
+        "'code-block'"
     ) in text
 
     input = QuillInput(tags=['em', 'ul'])
@@ -86,12 +116,3 @@ def test_widget_render():
     assert f'quill-input-{input.id}' in text
     assert "['italic', 'list']" in text
     assert "['italic', {'list': 'bullet'}]" in text
-
-    input = QuillInput(placeholders={'Hello World': 'Hello, <b>World</b>!'})
-    text = input(field)
-    assert "{'placeholder': ['Hello World']}" in text
-    assert "delimiters: ['', '']" in text
-    assert (
-        "placeholders: [{id: 'Hello World', label: 'Hello, <b>World</b>!'}]"
-        in text
-    )

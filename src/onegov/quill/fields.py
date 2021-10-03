@@ -11,30 +11,19 @@ class QuillField(TextAreaField):
     Available tags are: strong, em, s, a, ol, ul, h1, h2, h3, blockquote, pre.
     (p and br tags are always possible).
 
-    Allows to provide a dictionary of placeholders/snippets.
-
     """
 
     def __init__(self, **kwargs):
-        tags = list(set(kwargs.pop('tags', TAGS)) & set(TAGS))
-        placeholders = kwargs.pop('placeholders', {})
-        placeholder_label = kwargs.pop('placeholder_label', 'Snippets')
+        tags = kwargs.pop('tags', TAGS)
+        tags = [tag for tag in tags if tag in TAGS]
+
         super(TextAreaField, self).__init__(**kwargs)
 
-        self.widget = QuillInput(
-            tags=tags,
-            placeholders=placeholders,
-            placeholder_label=placeholder_label
-        )
+        self.widget = QuillInput(tags=tags)
 
-        tags = ['p', 'br'] + tags
-        if 'ol' in tags or 'ul' in tags:
-            tags.append('li')
-
-        attributes = {}
-        if 'a' in tags:
-            attributes['a'] = ['href']
-
+        tags += ['p', 'br']
+        tags += ['li'] if 'ol' in tags or 'ul' in tags else []
+        attributes = {'a': 'href'} if 'a' in tags else {}
         self.cleaner = Cleaner(tags=tags, attributes=attributes, strip=True)
 
     def pre_validate(self, form):
