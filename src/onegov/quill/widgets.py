@@ -5,7 +5,7 @@ from wtforms.widgets.core import HTMLString
 
 HEADINGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
 LISTS = ['ol', 'ul']
-TAGS = ['strong', 'em', 'a'] + HEADINGS + LISTS + ['blockquote']
+TAGS = ['strong', 'em', 's', 'a'] + HEADINGS + LISTS + ['blockquote', 'pre']
 
 
 class QuillInput(HiddenInput):
@@ -30,6 +30,8 @@ class QuillInput(HiddenInput):
             self.formats.append("'bold'")
         if 'em' in tags:
             self.formats.append("'italic'")
+        if 's' in tags:
+            self.formats.append("'strike'")
         if 'a' in tags:
             self.formats.append("'link'")
         if set(tags) & set(HEADINGS):
@@ -38,6 +40,8 @@ class QuillInput(HiddenInput):
             self.formats.append("'list'")
         if 'blockquote' in tags:
             self.formats.append("'blockquote'")
+        if 'pre' in tags:
+            self.formats.append("'code-block'")
         if self.placeholders:
             self.formats.append("'placeholder'")
 
@@ -46,6 +50,8 @@ class QuillInput(HiddenInput):
             self.toolbar.append("'bold'")
         if 'em' in tags:
             self.toolbar.append("'italic'")
+        if 's' in tags:
+            self.toolbar.append("'strike'")
         if 'a' in tags:
             self.toolbar.append("'link'")
         if 'h1' in tags:
@@ -66,6 +72,8 @@ class QuillInput(HiddenInput):
             self.toolbar.append("{'list': 'bullet'}")
         if 'blockquote' in tags:
             self.toolbar.append("'blockquote'")
+        if 'pre' in tags:
+            self.toolbar.append("'code-block'")
         if self.placeholders:
             options = [f"'{key}'" for key in self.placeholders]
             options = ', '.join(options)

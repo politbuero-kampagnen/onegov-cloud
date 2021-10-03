@@ -8,8 +8,8 @@ class QuillField(TextAreaField):
     """ A textfield using the quill editor and with integrated sanitation.
 
     Allows to specifiy which tags to use in the editor and for sanitation.
-    Available tags are: strong, em, ol and ul (p and br tags are always
-    possible).
+    Available tags are: strong, em, s, a, ol, ul, h1, h2, h3, blockquote, pre.
+    (p and br tags are always possible).
 
     Allows to provide a dictionary of placeholders/snippets.
 

@@ -6,13 +6,15 @@ from onegov.quill.fields import QuillField
 def test_widget_initalization():
     input = QuillInput()
     assert input.formats == [
-        "'bold'", "'italic'", "'link'", "'header'", "'list'", "'blockquote'"
+        "'bold'", "'italic'", "'strike'", "'link'", "'header'", "'list'",
+        "'blockquote'", "'code-block'"
     ]
     assert input.toolbar == [
-        "'bold'", "'italic'", "'link'",
+        "'bold'", "'italic'", "'strike'", "'link'",
         "{'header': 1}", "{'header': 2}", "{'header': 3}",
         "{'header': 4}", "{'header': 5}", "{'header': 6}",
-        "{'list': 'ordered'}", "{'list': 'bullet'}", "'blockquote'"
+        "{'list': 'ordered'}", "{'list': 'bullet'}",
+        "'blockquote'", "'code-block'"
     ]
 
     input = QuillInput(tags=['strong', 'ul'])
@@ -27,6 +29,10 @@ def test_widget_initalization():
     assert input.formats == ["'bold'"]
     assert input.toolbar == ["'bold'"]
 
+    input = QuillInput(tags=['s'])
+    assert input.formats == ["'strike'"]
+    assert input.toolbar == ["'strike'"]
+
     input = QuillInput(tags=['a'])
     assert input.formats == ["'link'"]
     assert input.toolbar == ["'link'"]
@@ -34,6 +40,10 @@ def test_widget_initalization():
     input = QuillInput(tags=['blockquote'])
     assert input.formats == ["'blockquote'"]
     assert input.toolbar == ["'blockquote'"]
+
+    input = QuillInput(tags=['pre'])
+    assert input.formats == ["'code-block'"]
+    assert input.toolbar == ["'code-block'"]
 
     input = QuillInput(tags=['h1'])
     assert input.formats == ["'header'"]
@@ -58,13 +68,16 @@ def test_widget_render():
     text = input(field)
     assert f'quill-container-{input.id}' in text
     assert f'quill-input-{input.id}' in text
-    assert "['bold', 'italic', 'link', 'header', 'list', 'blockquote']" in text
     assert (
-        "['bold', 'italic', 'link', "
+        "['bold', 'italic', 'strike', 'link', 'header', 'list', "
+        "'blockquote', 'code-block']"
+    ) in text
+    assert (
+        "'bold', 'italic', 'strike', 'link', "
         "{'header': 1}, {'header': 2}, {'header': 3}, "
         "{'header': 4}, {'header': 5}, {'header': 6}, "
         "{'list': 'ordered'}, {'list': 'bullet'}, "
-        "'blockquote']"
+        "'blockquote', 'code-block'"
     ) in text
 
     input = QuillInput(tags=['em', 'ul'])
