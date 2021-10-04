@@ -3,9 +3,13 @@ from wtforms.widgets import HiddenInput
 from wtforms.widgets.core import HTMLString
 
 
-HEADINGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
-LISTS = ['ol', 'ul']
-TAGS = ['strong', 'em', 's', 'a'] + HEADINGS + LISTS + ['blockquote', 'pre']
+ALL_TAGS = [
+    'strong', 'em', 's', 'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ol', 'ul',
+    'blockquote', 'pre'
+]
+DEFAULT_TAGS = [
+    'strong', 'em', 's', 'a', 'h2', 'h3', 'ol', 'ul', 'blockquote', 'pre'
+]
 
 
 class QuillInput(HiddenInput):
@@ -17,8 +21,8 @@ class QuillInput(HiddenInput):
     """
 
     def __init__(self, **kwargs):
-        tags = kwargs.pop('tags', TAGS)
-        tags = [tag for tag in tags if tag in TAGS]
+        tags = kwargs.pop('tags', DEFAULT_TAGS)
+        tags = [tag for tag in tags if tag in ALL_TAGS]
 
         super(QuillInput, self).__init__(**kwargs)
 

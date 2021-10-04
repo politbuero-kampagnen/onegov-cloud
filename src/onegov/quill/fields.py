@@ -1,6 +1,7 @@
 from bleach.sanitizer import Cleaner
 from onegov.quill.widgets import QuillInput
-from onegov.quill.widgets import TAGS
+from onegov.quill.widgets import ALL_TAGS
+from onegov.quill.widgets import DEFAULT_TAGS
 from wtforms import TextAreaField
 
 
@@ -14,8 +15,8 @@ class QuillField(TextAreaField):
     """
 
     def __init__(self, **kwargs):
-        tags = kwargs.pop('tags', TAGS)
-        tags = [tag for tag in tags if tag in TAGS]
+        tags = kwargs.pop('tags', DEFAULT_TAGS)
+        tags = [tag for tag in tags if tag in ALL_TAGS]
 
         super(TextAreaField, self).__init__(**kwargs)
 

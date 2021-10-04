@@ -1,10 +1,35 @@
 from onegov.form import Form
-from onegov.quill.widgets import QuillInput
 from onegov.quill.fields import QuillField
+from onegov.quill.widgets import ALL_TAGS
+from onegov.quill.widgets import QuillInput
 
 
 def test_widget_initalization():
     input = QuillInput()
+    assert input.formats == [
+        "'bold'",
+        "'italic'",
+        "'strike'",
+        "'link'",
+        "'header'",
+        "'list'",
+        "'blockquote'",
+        "'code-block'"
+    ]
+    assert input.toolbar == [
+        "'bold'",
+        "'italic'",
+        "'strike'",
+        "'link'",
+        "{'header': 2}",
+        "{'header': 3}",
+        "{'list': 'ordered'}",
+        "{'list': 'bullet'}",
+        "'blockquote'",
+        "'code-block'"
+    ]
+
+    input = QuillInput(tags=ALL_TAGS)
     assert input.formats == [
         "'bold'",
         "'italic'",
@@ -98,12 +123,8 @@ def test_widget_render():
         "'italic', "
         "'strike', "
         "'link', "
-        "{'header': 1}, "
         "{'header': 2}, "
         "{'header': 3}, "
-        "{'header': 4}, "
-        "{'header': 5}, "
-        "{'header': 6}, "
         "{'list': 'ordered'}, "
         "{'list': 'bullet'}, "
         "'blockquote', "
